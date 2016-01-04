@@ -1,0 +1,215 @@
+<style>
+</style>
+<h1 class="page-title"><?php echo $this->title ?></h1>
+<div class="row">
+    <div class="col-md-8">
+        <form role="form" method="post">
+            <div class="form-group">
+                <label>专辑：</label>
+                <input type="text" class="form-control" id="name" name="name" data-toggle="popover" value="<?php echo $this->model->name ?>">
+            </div>
+            <div class="form-group">
+                <label>作者：</label>
+
+                <select id="authorId" name="authorId">
+                    <option value="">作者</option>
+                    <?php foreach ($this->authors as $author): ?>
+                        <option value="<?php echo $author->id ?>" 
+                            <?php
+                                if ($this->model->authorId == $author->id) {
+                                    echo "selected='selected'";
+                                }
+                            ?>>
+                        <?php
+                        echo $author->name;
+                        ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>分类：</label>
+            </div>
+            <div class="form-group">
+                <?php foreach ($this->categorys as $category): ?>
+                    <div  style="float:left" >
+                        <input id="<?php echo $category->id ?>" type="radio" name="categoryId" value="<?php echo $category->id ?>" 
+                        <?php
+                            if ($this->model->categoryId == $category->id) {
+                                echo "checked='checked'";
+                            }
+                        ?>/> <label class="marginright10px" for="<?php echo $category->id ?>"><?php echo $category->name ?></label>
+                        </div>
+                <?php endforeach; ?>
+                <?php
+                    if (count($this->categorys) == 0) {
+                        echo '<a href="' . $this->url(array(), "manage-category-list-home") . '" class="butn btn-default" target="_blank">暂时没有分类可以关联， 现在添加</a>';
+                    }
+                ?>
+            </div>
+            <div class="clear-20"></div>
+            <div class="form-group">
+                <label>专辑图片：</label>
+                <div class='panel panel-info'>
+                    <div id="gy-photo" class='panel-body gy-photo'>
+                    </div>
+                </div>
+                <input type="hidden" name="photo" id="photo"/>
+            </div>
+            <div class="form-group">
+                <label>已选中节目：</label>
+                <div class="panel panel-info">
+                    <div id="gy-program" class="gy-program-block clearfix">
+                        <?php foreach ($this->own_programs as $p): ?>
+                            <div class="gy-sd" id="<?php echo $p->id ?>" name="<?php echo $p->id ?>">
+                                <button type="button" class="rm" onclick="del('<?php echo $p->id ?>')" >×</button>
+                                <button type="button" class="lt" onclick="left('<?php echo $p->id ?>')">&lt;</button>
+                                <button type="button" class="rt" onclick="right('<?php echo $p->id ?>')">&gt;</button>
+                                <button type="button" class="rt sel" style="display: none" onclick="addProgram('<?php echo $p->id ?>')">选择</button>
+                                <?php echo $p->name ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <input type="hidden" name="programs" id="programs"/>
+            </div>
+            <div class="form-group">
+                <label>未选中节目：</label>
+                <div class="panel panel-info">
+                    <div id="not-program" class="gy-program-block clearfix">
+                        <?php foreach ($this->not_own_programs as $p): ?>
+                            <div class="gy-sd" id="<?php echo $p->id ?>" name="<?php echo $p->id ?>">
+                                <button type="button" class="rm" style="display: none" onclick="del('<?php echo $p->id ?>')" >×</button>
+                                <button type="button" class="lt" style="display: none" onclick="left('<?php echo $p->id ?>')">&lt;</button>
+                                <button type="button" class="rt" style="display: none" onclick="right('<?php echo $p->id ?>')">&gt;</button>
+                                <button type="button" class="rt sel" onclick="addProgram('<?php echo $p->id ?>')">选择</button>
+                                <?php echo $p->name ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    (function($) {
+        $('.gy-photo').photoSelector(false, <?php echo json_encode($this->photo) ?>);
+
+        $('#save-btn').click(function() {
+            var save = $('#gy-photo').attr('save');
+            if (!save || save === '{}') {
+                $('#photo').val('');
+            } else {
+                $('#photo').val(save);
+            }
+        });
+        
+//        $('input[name="programs[]"]').change(function(){
+//            $(this).closest('.label').toggleClass('label-success');
+//        });
+    })(jQuery);
+    
+    function left(id) {
+        var own_programs = $('#gy-program').children();
+
+        if ($(own_programs[0]).attr('id') == id) {
+            return;
+        }
+
+        var cur_program = $('#'+ id);
+        var lf_program = $(cur_program).prev('div');
+        
+        $(lf_program).remove();
+        
+        $(cur_program).after(lf_program);
+        
+        sortValue();
+    }
+    
+    function right(id) {
+        var own_programs = $('#gy-program').children();
+
+        if ($(own_programs[own_programs.length - 1]).attr('id') == id) {
+            return;
+        }
+
+        var cur_program = $('#'+ id);
+        var rt_program = $(cur_program).next('div');
+        
+        $(rt_program).remove();
+        
+        $(cur_program).before(rt_program);
+        
+        sortValue();
+    }
+    
+    function del(id) {
+        var del_program = $('#'+ id);
+        
+        $(del_program).remove();
+        
+        var buttons = $(del_program).children('button');
+        
+        for (var i = 0; i < buttons.length; i++) {
+            if ($(buttons[i]).html() != "选择") {
+                $(buttons[i]).hide();
+            }
+            else {
+                $(buttons[i]).show();
+            }
+        }
+        
+        $(del_program).on("click", addProgram($(del_program).attr('id')));
+        
+        $('#not-program').append(del_program);
+        
+        sortValue();
+    }
+    
+    function sortValue() {
+        $('#programs').val("");
+        
+        var own_programs = $('#gy-program').children();
+        
+        for (var i = 0; i < own_programs.length;i++) {
+            if ($('#programs').val() != "") {
+                var val = $('#programs').val();
+                
+                $('#programs').val(val + ',');
+            }
+            
+            var val = $('#programs').val();
+            
+            $('#programs').val(val + $(own_programs[i]).attr('id'));
+        }
+    }
+    
+    function addProgram(id) {
+        var add_programs = $('#'+ id);
+        
+        var par_ele = $(add_programs).parent();
+        
+        if ($(par_ele).attr('id') == 'gy-program') {
+            return;
+        }
+        
+        var buttons = $(add_programs).children('button');
+        
+        for (var i = 0; i < buttons.length; i++) {
+            if ($(buttons[i]).html() == "选择") {
+                $(buttons[i]).hide();
+            }
+            else {
+                $(buttons[i]).show();
+            }
+        }
+        
+        $('#gy-program').append(add_programs);
+        
+        sortValue();
+    }
+    
+    sortValue();
+</script>

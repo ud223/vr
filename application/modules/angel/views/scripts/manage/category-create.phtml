@@ -1,0 +1,28 @@
+<style>
+</style>
+<h1 class="page-title"><?php echo $this->title ?></h1>
+<div class="row">
+    <div class="col-md-8">
+        <form role="form" method="post">
+            <div class="form-group">
+                <label>分类名称：</label>
+                <input type="text" class="form-control" id="name" name="name" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>分类名称(英文)：</label>
+                <input type="text" class="form-control" id="name_en" name="name_en" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>分类描述：</label>
+                <input type="text" style="display: none" class="form-control" id="description" name="description" data-toggle="popover" value="">
+            </div>
+            <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    (function($) {
+        $('#save-btn').click(function() {
+        });
+    })(jQuery);
+</script>

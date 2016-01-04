@@ -1,0 +1,55 @@
+<?php
+$company = $this->company;
+$user = $this->me->getUser();
+?>
+<style>
+    h1 {
+        background:url(http://cdn2.iconfinder.com/data/icons/function_icon_set/accepted_48.png) left top no-repeat;
+        display:inline-block;
+        font-size:24px;
+        height:48px;
+        line-height:48px;
+        margin-top:20px;
+        padding-left:60px;
+    }
+</style>
+<div class="fullwrapper">
+        <div class="container_24">
+                <div class="grid_24 checkoutflow">
+                        <span  class="black">签署条款</span>
+                        <span class="black"> - </span>
+                        <span class="black">安全支付</span>
+                        <span class="black"> - </span>
+                        <span class="black">成功提交</span>
+                </div>
+        </div>
+</div>
+<div class="container_24 main">
+    <div class="clear_50px"></div>
+        <div class="grid_24 whitebg aligncenter">
+            <div class="radiusall_4px docs paddingbox20px successpanel">
+                    <h1>支付成功</h1>
+                    <div class="clear_20px"></div>
+                    <p class="bold green font16px">你已经成功完成投资所有流程，目前状态还在等待融资结束</p>
+                    <div class="clear_5px"></div>
+                    <p>所有项目最新情况我们将即使通过邮箱与你联系，与此同时请时刻保持关注该项目的最新进展</p>
+                    <div class="clear_5px"></div>
+                    <p>所有信息我们已经发送邮件至邮箱：<?php echo $user->email ?></p>
+                    <div class="clear_20px"></div>
+                    <div class="aligncenter">
+                            <a href="/" class="btn btn_white gbtnnoicon">返回首页</a>
+                            <a href="<?php echo $this->url(array('id'=>$company->id), 'company-detail')?>" class="btn btn_white gbtnnoicon">查看 “<?php echo $company->name ?>”</a>
+                    </div>
+                    <div class="clear_20px"></div>
+            </div>
+    </div>
+</div>
+<div class="clear_50px"></div>
+
+
+
+<script type="text/javascript">
+    (function($){
+        $('body').addClass('checkout');
+    })(jQuery);
+</script>

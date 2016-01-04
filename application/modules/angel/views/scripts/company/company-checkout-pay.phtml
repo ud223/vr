@@ -1,0 +1,120 @@
+<?php
+$company = $this->company;
+$user = $this->me->getUser();
+?>
+<style>
+    #addressbar {
+        background:#F8F8F8;
+        border:1px #EEE solid;
+        font-family:'arial';
+        line-height:24px;
+        padding:10px;
+    }
+    #xx01 {
+        background-image:url('/img/photos/paylist.jpg');
+        background-repeat:no-repeat;
+        height:300px;
+        width:100%;
+    }
+</style>
+<div class="fullwrapper">
+        <div class="container_24">
+                <div class="grid_24 checkoutflow">
+                        <span  class="black">签署条款</span>
+                        <span class="black"> - </span>
+                        <span class="black">安全支付</span>
+                        <span> - </span>
+                        <span>成功提交</span>
+                </div>
+        </div>
+</div>
+<div class="container_24 main">
+        <div class="grid_15 ltside">
+            <div class="radiusall_4px commonshadow docs relative paddingbox20px">
+                <a style="position:absolute;right:20px;top:20px;" href="<?php echo $this->url(array('id'=>$company->id), 'company-checkout')?>">[返回]</a>
+                <h1 class="font18px"><?php echo $company->name ?></h1>
+                    <div class="clear_5px"></div>
+                    <p>投资金额： ￥<?php echo $this->amount ?></p>
+                    <div class="clear_5px"></div>
+                    <p>所占股份： <?php echo $this->perc ?>%</p>
+                    <div class="clear_30px"></div>
+                    <p class="bold">纸质法律合同收件地址</p>
+                    <div class="clear_5px"></div>
+                    <div id="addressbar">
+                            <strong><?php echo $this->contract_receiver ?></strong>
+                            <p><?php echo $this->contract_address ?></p>
+                            <p><?php echo $this->contract_phone ?></p>
+                    </div>
+                    <div class="clear_30px"></div>
+                    <p class="bold">付款方式</p>
+                    <div class="clear_20px"></div>
+                    <div id="xx01">
+
+                    </div>
+            </div>
+            <div class="clear_20px"></div>
+            <input class="btn btn_green nomargin" type="button" id="submitbtn" value="确认支付"/>
+
+    </div>
+    <div class="grid_9 rtside">
+
+        <?php echo $this->partial('company/partials/_company_card.phtml', array('user'=>$this->me->getUser(), 'company'=>$company, 'logoUrl'=>$this->logoUrl, 'funding_mini_unit_perc'=>$this->funding_mini_unit_perc, 'show_btns'=>false, 'amount'=>$this->amount)); ?>
+        
+        <?php if(strlen($company->additional_rights)>0) {
+            
+        ?>
+        <div class="sideblock">
+            
+                <div class="head">
+                        附加权益
+                </div>
+                <div class="body">
+                        <div class="imgs">
+                                <p><?php echo $company->additional_rights ?></p>
+                                <div class="clear"></div>
+                        </div>
+                </div>
+        </div>
+        <?php
+        }
+        ?>
+        
+        <?php echo $this->partial('company/partials/_company_block_investor_and_guarantor.phtml', array('company'=>$company, 'show_guarantors'=>true)); ?>
+        
+        <?php echo $this->partial('company/partials/_company_block_investors.phtml', array('company'=>$company)); ?>
+        
+    </div>
+</div>
+<div class="clear_50px"></div>
+
+
+<div id="waitingtopaypanel" class="hidden">
+    <div class="paddingbox20px aligncenter">
+        <p>网页将临时跳转到你选择的支付平台网站</p>
+        <input type="button" class="btn btn_white gbtn gbtnnoicon" id="completepayment" value="支付完成" /> 
+        <input type="button" class="btn btn_white gbtn gbtnnoicon" value="支付出现问题，重试" />
+    </div>
+</div>
+
+<script type="text/javascript">
+    (function($){
+        $('body').addClass('checkout');
+        
+        var companyId = '<?php echo $company->id ?>';
+
+        $('#submitbtn').click(function(){
+            $.popup({title:'支付跳转', modal:true}, 'waitingtopaypanel');
+        });
+        
+        $('#completepayment').click(function(){
+            var data = {'company_id':companyId};
+            $.post('<?php echo $this->url(array(), 'invest-company')?>', data, function(response){
+                if(response === 1) {
+                    location.href="<?php echo $this->url(array('id'=>$company->id), 'company-checkout-success')?>";
+                } else {
+                    alert('支付信息保存错误，请重试');
+                }
+            });
+        });
+    })(jQuery);
+</script>

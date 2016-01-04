@@ -1,0 +1,87 @@
+<style>
+    .itm {
+    }
+    .wp {
+        background:#F0F0F0;
+        margin-bottom:30px;
+        padding:15px;
+        height:140px;
+    }
+    .wp p {
+        font-size:12px;
+        margin:0;
+    }
+    .iwp {
+        height:270px;
+        margin-top:15px;
+        overflow:hidden;
+        position:relative;
+        width:100%;
+    }
+    .iwp img {
+        left:0;
+        position:absolute;
+        top:0;
+    }
+    .pwp {
+        margin:10px 0;
+    }
+    .wp label {
+        color:#5cb85c;
+    }
+    .wp ul {
+        display:block;
+        margin:5px 0 0;
+        padding:0;
+    }
+    .wp ul li {
+        display:inline-block;
+        margin-bottom:10px;
+        margin-right:5px;
+        list-style: none;
+    }
+    .btn-group {
+        margin-top:0;
+    }
+</style>
+<h1 class="page-title"><?php echo $this->title ?></h1>
+<div class="btb">
+    <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-news-create') ?>">创建新闻</a>
+</div>
+<div class="row">
+    <?php
+    $c = 0;
+    ?>
+    <?php foreach ($this->resource as $p): ?>
+        <div class="col-md-3 itm">
+            <input type="hidden" class="tmp" value="<?php echo $p['id'] ?>"/>
+            <div class="wp">
+                <p style="text-align:right">
+                    <button type="button" class="btn btn-danger btn-sm remove-news">删除</button>
+                </p>
+                <div class='pwp'>
+                    <p><?php echo $p['title'] ?></p>
+                </div>
+                <div class="btn-group">
+                    <a href="<?php echo $this->url(array(id => $p["id"]), 'manage-news-save') ?>" class="btn btn-info btn-sm">编辑</a>
+                </div>
+            </div>
+        </div>
+        <?php $c ++; ?>
+        <?php if ($c % 4 == 0): ?>
+            <div class="clearfix"></div>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <?php echo $this->partial('manage/partials/_paginator_bar.phtml', array('current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'manage-product-list'));  ?>
+    </div>
+</div>
+<script type="text/javascript">
+    (function($) {
+        $('.remove-news').click(function() {
+            removeObject($(this), '<?php echo $this->url(array(), 'manage-news-remove') ?>');
+        });
+    })(jQuery);
+</script>

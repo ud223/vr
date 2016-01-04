@@ -1,0 +1,49 @@
+
+<div class="adminmain">
+        <h1>已就绪公司</h1>
+        <div>
+            <?php
+            foreach($this->companies as $company) {
+            ?>
+                
+                <div class="adminitem">
+                    <ul>
+                        <li class="col1"><a href="#" class="itemlink"><?php echo $company->name ?></a></li>
+                        <li class="col2"></li>
+                    </ul>
+                    <div class="datPoor">
+                        <input type="hidden" class="companyid" value="<?php echo  $company->id?>"/>
+                    </div>
+                    <div class="operationbar">
+                            <input type="button" class="btn btn_white gbtnnoicon triggleinvest" value="开始融资"/> 
+                    </div>
+                </div>
+            
+            </div>
+            <?php
+            }
+            ?>
+        
+</div>
+
+
+<script type="text/javascript">
+(function($){
+
+    $('.triggleinvest').click(function(e){
+        var object = $(e.target);
+        var adminitem  = findParentByClass(object, 'adminitem');
+        var companyId = adminitem.find('.companyid').val();
+        
+        var data = {'id':companyId};
+        $.post('<?php echo $this->url(array(), 'trigger-funding')?>', data, function(response){
+            if(response === 1) {
+                alert('操作成功');
+                adminitem.remove();
+            } else {
+                alert('操作失败，请重试');
+            }
+        });
+    });
+})(jQuery);
+</script>

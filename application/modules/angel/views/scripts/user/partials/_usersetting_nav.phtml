@@ -1,0 +1,68 @@
+<?php 
+    $usertype = $this->usertype;
+    $selected = $this->selected;
+    $classname = 'selected';
+?>
+
+<div class="grid_3">
+    <div id="sidenavwrapper">
+        <ul class="sidenav">
+            <li class='<?php if($selected === 'profile') { echo $classname; } ?>'>
+                <a href="/profile">
+                        用户资料
+                </a>
+            </li>
+            <li class='<?php if($selected === 'resetpwd') { echo $classname; } ?>'>
+                <a href="/resetpwd">
+                        修改密码
+                </a>
+            </li>
+            <li class='<?php if($selected === 'message') { echo $classname; } ?>'>
+                <a href="#">
+                        消息盒子
+                </a>
+            </li>
+            <?php
+            if($usertype === 'investor') {
+            ?>
+            <li class='<?php if($selected === 'myinvest') { echo $classname; } ?>'>
+                <a href="#">
+                        投资的公司
+                </a>
+            </li>
+            <?php
+            }
+            ?>
+            
+            <?php
+            if($usertype === 'startup') {
+            ?>
+            <li class='<?php if($selected === 'mycompany') { echo $classname; } ?>'>
+                <a href="<?php echo $this->url(array(), 'my-company')?>">
+                        我的公司
+                </a>
+            </li>
+            <?php
+            }
+            ?>
+            
+            <li class='<?php if($selected === 'watching') { echo $classname; } ?>'>
+                <a href="#">
+                        我关注的人
+                </a>
+            </li>
+            <li class='<?php if($selected === 'watchingme') { echo $classname; } ?>'>
+                <a href="#">
+                        关注我的人
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="clear_50px"></div>
+</div>
+<script type="text/javascript">
+    (function($){
+        $('#sidenavwrapper').stickyBox();
+    })(jQuery);
+</script>
+        

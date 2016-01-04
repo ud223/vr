@@ -1,0 +1,197 @@
+
+<div class="adminmain">
+        <h1>用户实名认证申请</h1>
+        <div>
+            <?php
+            
+            foreach($this->users as $user) {
+                $fifUrl = "";
+                $fifName = "";
+                if($user->identity_front_doc){
+                    $fifUrl = $this->url(array('doctype'=>$this->type_identity_front, 'user_id'=>$user->id, 'doc_id'=>$user->identity_front_doc->id), 'user-doc');
+                    $fifName = $user->identity_front_doc->filename;
+                }
+                $fibUrl = "";
+                $fibName = "";
+                if($user->identity_back_doc){
+                    $fibUrl = $this->url(array('doctype'=>$this->type_identify_back, 'user_id'=>$user->id, 'doc_id'=>$user->identity_back_doc->id), 'user-doc');
+                    $fibName = $fifName = $user->identity_back_doc->filename;
+                }
+            ?>
+                
+                <div class="adminitem">
+                    <ul>
+                        <li class="col1"><a href="#" class="itemlink"><?php echo $user->username ?> (<?php echo $user->email ?>)</a></li>
+                        <li class="col2"><?php echo $user->getUserTypeInChinese() ?></li>
+                    </ul>
+                    <div class="datPoor">
+                        <input type="hidden" class="userid" value="<?php echo  $user->id?>"/>
+                        <input type="hidden" class="username" value="<?php echo  $user->username?>"/>
+                        <input type="hidden" class="useremail" value="<?php echo  $user->email?>"/>
+                        <input type="hidden" class="userphone" value="<?php echo $user->phone?>"/>
+                        <input type="hidden" class="useraddress" value="<?php echo $user->address?>"/>
+                        <input type="hidden" class="useridentityid" value="<?php echo  $user->identity_id?>"/>
+                        <input type="hidden" class="usertype" value="<?php echo  $user->getUserTypeInChinese()?>"/>
+                        <input type="hidden" class="userprofileimage" value="<?php echo $this->profileImage($user->profile_image,'large') ?>"/>
+                        <input type="hidden" class="userprofileimageorig" value="<?php echo $this->profileImage($user->profile_image,'orig') ?>"/>
+                        
+                        <input type="hidden" filename="<?php echo $fifName?>" class="fifdoc" value="<?php echo $fifUrl ?>"/>
+                        <input type="hidden" filename="<?php echo $fibName?>" class="fibdoc" value="<?php echo $fibUrl ?>"/>
+                        <?php
+                        foreach($user->identity_refused_reason as $reason) {
+                            ?>
+                            <input type="hidden" class="refusereason" value="<?php echo $reason->content ?>"/>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <div class="operationbar">
+                            <input type="button" class="btn btn_white gbtnnoicon adminitemdetail" value="查看详细"/> 
+                    </div>
+                </div>
+            
+            </div>
+            <?php
+            }
+            ?>
+        
+</div>
+<!--<div class="ddl">
+        <a href="#">下拉菜单1</a>
+        <a href="#">下拉菜单2</a>
+        <a href="#">下拉菜单3</a>
+        <a href="#">下拉菜单4</a>
+        <a href="#">下拉菜单5</a>
+
+</div>-->
+<div id="detailTemplate" class="hidden">
+    <div class="paddingbox20px personalinfolist-popup">
+        <div style="position:relative;">
+            <input type="hidden" id="pop_userid" value=""/>
+            <a target="_blank" id="pop_profile_image_wrapper" href="" style="position:absolute;left:20px;"><img id="pop_profile_image" src=""/></a>
+            <div style="margin-left:300px;top:0;min-height:260px;">
+                <p>姓名： <strong id="pop_name" class="green"></strong></p>
+                <p>身份证号码： <strong id="pop_identityid" class="green"></strong></p>
+                <p>联系电话： <strong id="pop_phone" class="green"></strong></p>
+                <p>电子邮箱： <strong id="pop_email" class="green"></strong></p>
+                <p>联系地址： <strong id="pop_address" class="green"></strong></p>
+                <p>身份证正面： <a class="skyblue bold" id="pop_identity_doc_front" href="#"></a></p>
+                <p>身份证反面： <a class="skyblue bold" id="pop_identity_doc_back" href="#"></a></p>
+            </div>
+        </div>
+        
+        <div style="margin:0 20px;">
+            <div id="pop_refuseboard" style="width:280px;float:left;">
+                <input type="button" class="btn btn_black" id="refusebtn" value="审批拒绝通过"/>
+                <div class="clear_10px"></div>
+                <p class="songti">请填写拒绝理由</p>
+                <div class="clear"></div>
+                <textarea id="reason" style="width:220px;height:80px"></textarea>
+            </div>
+            <div id="pop_btns" style="width:270px;float:left;">
+                <input type="button" class="btn btn_green" id="approvebtn" value="审批通过"/>
+            </div>
+            
+            <div class="clear"></div>
+        </div>
+        <div class="clear_10px"></div>
+        <div id="pop_records">
+            
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+(function($){
+    
+    $('.adminitemdetail').click(function(e){
+        var object = $(e.target);
+        var container = findParentByClass(object, 'adminitem');
+        var user_id = container.find('.userid').val()
+        var profile_image = container.find('.userprofileimage').val();
+        var profile_image_orig = container.find('.userprofileimageorig').val();
+        var user_name = container.find('.username').val();
+        var user_identityid = container.find('.useridentityid').val();
+        var user_phone = container.find('.userphone').val();
+        var user_email = container.find('.useremail').val();
+        var user_address = container.find('.useraddress').val();
+        var fif = container.find('.fifdoc').val();
+        var fifName = container.find('.fifdoc').attr('filename');
+        var fib = container.find('.fibdoc').val();
+        var fibName = container.find('.fibdoc').attr('filename');
+        
+        
+        // set value
+        $('#pop_userid').val(user_id);
+        $('#pop_profile_image').attr('src', profile_image);
+        $('#pop_profile_image_wrapper').attr('href', profile_image_orig);
+        $('#pop_name').html(user_name);
+        $('#pop_identityid').html(user_identityid);
+        $('#pop_phone').html(user_phone);
+        $('#pop_email').html(user_email);
+        $('#pop_address').html(user_address);
+        $('#pop_identity_doc_front').attr('href', fif);
+        $('#pop_identity_doc_front').html(fifName);
+        $('#pop_identity_doc_back').attr('href', fib);
+        $('#pop_identity_doc_back').html(fibName);
+        $.popup({title:'实名认证用户审批'}, 'detailTemplate');
+        
+        var refuseReason = container.find('.refusereason');
+        $('#pop_records').empty();
+        refuseReason.each(function(){
+            var p = $("<p style='margin-bottom:5px;'>" + $(this).val() + "</p>");
+            $('#pop_records').append(p);
+        });
+    });
+    var getUid = function(e){
+        var object = $(e.target);
+        var container = findParentByClass(object, 'personalinfolist-popup');
+        var user_id = container.find('#pop_userid').val();
+        return user_id;
+    };
+    $('#approvebtn').click(function(e){
+        var user_id = getUid(e);
+        var item = findParentByClass($(".userid[value='" + user_id + "']"), 'adminitem');
+        if(!confirm('确定通过审批？')) {
+            return;
+        }
+        var data = {'user_id':user_id};
+
+        $.post('<?php echo $this->url(array(), 'accept-identity-info')?>', data, function(response){
+            if(response === 1) {
+                alert('操作成功');
+                $.popupClose();
+                item.remove();
+            } else {
+                alert('操作失败');
+            }
+        });
+    });
+    $('#refusebtn').click(function(e){
+        var user_id = getUid(e);
+        var item = findParentByClass($(".userid[value='" + user_id + "']"), 'adminitem');
+        if(!confirm('确定拒绝通过审批？')) {
+            return;
+        }
+        var object = $(e.target);
+        var container = findParentByClass(object, 'personalinfolist-popup');
+        var reason = container.find($('#reason')).val();
+        if(reason.length > 0) {
+            var data = {'user_id':user_id, 'reason':reason};
+
+            $.post('<?php echo $this->url(array(), 'refused-identity-info')?>', data, function(response){
+                if(response === 1) {
+                    alert('操作成功');
+                    $.popupClose();
+                    item.remove();
+                } else {
+                    alert('操作失败');
+                }
+            });
+        } else {
+            alert('必须输入拒绝原因');
+        }
+    });
+})(jQuery);
+</script>

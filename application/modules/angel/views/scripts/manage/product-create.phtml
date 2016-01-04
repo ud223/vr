@@ -1,0 +1,302 @@
+
+<style>
+</style>
+<h1 class="page-title"><?php echo $this->title ?></h1>
+<div class="row">
+    <div class="col-md-8">
+        <form role="form" method="post">
+            <div class="form-group">
+                <label>分类：</label>
+            </div>
+            <div class="form-group">
+                <select id="category_id" name="category_id" value="">
+                    <option value="0">请选择分类</option>
+                    <?php foreach ($this->categorys as $category): ?>
+                        <option value="<?php echo $category->id ?>"
+                            <?php
+                            if ($this->model->category_id == $category->id) {
+                                echo "selected='selected'";
+                            }
+                            ?>><?php echo $category->name ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <?php
+                if (count($this->categorys) == 0) {
+                    echo '<a href="' . $this->url(array(), "manage-category-list-home") . '" class="butn btn-default" target="_blank">暂时没有分类可以关联， 现在添加</a>';
+                }
+                ?>
+
+            </div>
+            <div class="clear-20"></div>
+            <div class="form-group">
+                <label>产品图片：</label>
+                <div class='panel panel-info'>
+                    <div id="gy-photo" class='panel-body gy-photo'>
+                    </div>
+                </div>
+                <input type="hidden" name="photo" id="photo"/>
+            </div>
+            <div class="form-group">
+                <label>产品名称：</label>
+                <input type="text" class="form-control" id="name" name="name" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>宽度：</label>
+                <input type="text" class="form-control" id="width" name="width" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>厚度：</label>
+                <input type="text" class="form-control" id="thickness" name="thickness" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>长度：</label>
+                <input type="text" class="form-control" id="height" name="height" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>款式：</label>
+                <input type="text" class="form-control" id="style" name="style" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>上/下钢板厚度：</label>
+                <input type="text" class="form-control" id="other_thickness" name="other_thickness" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>可用芯材：</label>
+                <input type="text" class="form-control" id="steel_core" name="steel_core" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>侧边封钢带：</label>
+                <input type="text" class="form-control" id="steel_belt" name="steel_belt" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>安装结构：</label>
+                <input type="text" class="form-control" id="structure" name="structure" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>详细描述：</label>
+                <input type="hidden" id="description" name="description">
+                <script type="text/plain" id="editor_description" name="editor_description" style="width:1000px;height:240px;">
+                    <p>请输入详细描述</p>
+                </script>
+            </div>
+            <!--英文部分-->
+            <div class="form-group">
+                <label>需填写英文数据：</label>
+                <a id="en_show" href="javascript:void(0)">展开</a>
+            </div>
+            <div id="en_pal" style="display: none">
+                <div class="form-group">
+                    <label>产品名称(英文)：</label>
+                    <input type="text" class="form-control" id="name_en" name="name_en" data-toggle="popover" value="">
+                </div>
+                <div class="form-group">
+                    <label>宽度(英文)：</label>
+                    <input type="text" class="form-control" id="width_en" name="width_en" data-toggle="popover" value="">
+                </div>
+                <div class="form-group">
+                    <label>厚度(英文)：</label>
+                    <input type="text" class="form-control" id="thickness_en" name="thickness_en" data-toggle="popover" value="">
+                </div>
+                <div class="form-group">
+                    <label>长度(英文)：</label>
+                    <input type="text" class="form-control" id="height_en" name="height_en" data-toggle="popover" value="">
+                </div>
+                <div class="form-group">
+                    <label>款式(英文)：</label>
+                    <input type="text" class="form-control" id="style_en" name="style_en" data-toggle="popover" value="">
+                </div>
+                <div class="form-group">
+                    <label>上/下钢板厚度(英文)：</label>
+                    <input type="text" class="form-control" id="other_thickness_en" name="other_thickness_en" data-toggle="popover" value="">
+                </div>
+                <div class="form-group">
+                    <label>可用芯材(英文)：</label>
+                    <input type="text" class="form-control" id="steel_core_en" name="steel_core_en" data-toggle="popover" value="">
+                </div>
+                <div class="form-group">
+                    <label>侧边封钢带(英文)：</label>
+                    <input type="text" class="form-control" id="steel_belt_en" name="steel_belt_en" data-toggle="popover" value="">
+                </div>
+                <div class="form-group">
+                    <label>安装结构(英文)：</label>
+                    <input type="text" class="form-control" id="structure_en" name="structure_en" data-toggle="popover" value="">
+                </div>
+                <div class="form-group">
+                    <label>详细描述(英文)：</label>
+                    <input type="hidden" id="description_en" name="description_en">
+                    <script type="text/plain" id="editor_description_en" name="editor_description_en" style="width:1000px;height:240px;">
+                    <p>请输入详细描述(英文)</p>
+                </script>
+                </div>
+            </div>
+            <button type="button" id="save-btn" class="btn btn-default">确认提交</button>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    (function($) {
+        $('.gy-photo').photoSelector();
+
+        $('#save-btn').click(function() {
+            var save = $('#gy-photo').attr('save');
+            if (!save || save === '{}') {
+                $('#photo').val('');
+            } else {
+                $('#photo').val(save);
+            }
+        });
+
+        $('#en_show').click(function() {
+            if ($('#en_show').html() == "展开") {
+                $('#en_pal').slideDown("fast");
+                $('#en_show').html("收起");
+            }
+            else {
+                $('#en_pal').slideUp("fast");
+                $('#en_show').html("展开");
+            }
+        })
+
+        $('#save-btn').click(function() {
+            var save = $('#gy-photo').attr('save');
+            if (!save || save === '{}') {
+                $('#photo').val('');
+            } else {
+                $('#photo').val(save);
+            }
+        });
+
+        $('input[name="programs[]"]').change(function(){
+            $(this).closest('.label').toggleClass('label-success');
+        });
+    })(jQuery);
+
+    function left(id) {
+        var own_programs = $('#gy-program').children();
+
+        if ($(own_programs[0]).attr('id') == id) {
+            return;
+        }
+
+        var cur_program = $('#'+ id);
+        var lf_program = $(cur_program).prev('div');
+
+        $(lf_program).remove();
+
+        $(cur_program).after(lf_program);
+
+        sortValue();
+    }
+
+    function right(id) {
+        var own_programs = $('#gy-program').children();
+
+        if ($(own_programs[own_programs.length - 1]).attr('id') == id) {
+            return;
+        }
+
+        var cur_program = $('#'+ id);
+        var rt_program = $(cur_program).next('div');
+
+        $(rt_program).remove();
+
+        $(cur_program).before(rt_program);
+
+        sortValue();
+    }
+
+    function del(id) {
+        var del_program = $('#'+ id);
+
+        $(del_program).remove();
+
+        var buttons = $(del_program).children('button');
+
+        for (var i = 0; i < buttons.length; i++) {
+            if ($(buttons[i]).html() != "O") {
+                $(buttons[i]).hide();
+            }
+            else {
+                $(buttons[i]).show();
+            }
+        }
+
+        $(del_program).on("click", addProgram($(del_program).attr('id')));
+
+        $('#not-program').append(del_program);
+
+        sortValue();
+    }
+
+    function sortValue() {
+        $('#programs').val("");
+
+        var own_programs = $('#gy-program').children();
+
+        for (var i = 0; i < own_programs.length;i++) {
+            if ($('#programs').val() != "") {
+                var val = $('#programs').val();
+
+                $('#programs').val(val + ',');
+            }
+
+            var val = $('#programs').val();
+
+            $('#programs').val(val + $(own_programs[i]).attr('id'));
+        }
+    }
+
+    function addProgram(id) {
+        var add_programs = $('#'+ id);
+
+        var par_ele = $(add_programs).parent();
+
+        if ($(par_ele).attr('id') == 'gy-program') {
+            return;
+        }
+
+        var buttons = $(add_programs).children('button');
+
+        for (var i = 0; i < buttons.length; i++) {
+            if ($(buttons[i]).html() == "O") {
+                $(buttons[i]).hide();
+            }
+            else {
+                $(buttons[i]).show();
+            }
+        }
+
+        $('#gy-program').append(add_programs);
+
+        sortValue();
+    }
+
+    $("#save-btn").click(function() {
+        var html_description = UM.getEditor('editor_description').getContent()
+        $("#description").val(html_description);
+
+        var html_description_en = UM.getEditor('editor_description_en').getContent()
+        $("#description_en").val(html_description_en);
+
+        $("form").submit();
+    });
+
+    //实例化编辑器
+    var um = UM.getEditor('editor_description');
+
+    um.addListener('blur',function(){
+        $('#focush2').html('编辑器失去焦点了')
+    });
+    um.addListener('focus',function(){
+        $('#focush2').html('')
+    });
+
+    var um1 = UM.getEditor('editor_description_en');
+
+    um1.addListener('blur',function(){
+        $('#focush2').html('编辑器失去焦点了')
+    });
+    um1.addListener('focus',function(){
+        $('#focush2').html('')
+    });
+</script>

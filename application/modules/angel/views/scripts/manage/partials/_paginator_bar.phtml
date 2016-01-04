@@ -1,0 +1,27 @@
+<div class="btn-group">
+    <?php for ($i = 1; $i <= $this->page_count; $i++) { ?>
+        <?php
+        $cls = "";
+        if ($this->current_page_no == $i) {
+            $cls = 'active';
+        }
+        ?>
+        <?php if ($this-category_id):?>
+            <a href="<?php echo $this->url(array('category_id'=>$this->category_id, 'page' => $i), $this->route_name) ?>" onclick="getLanguageParam(this)" class="btn btn-default btn-sm <?php echo $cls ?>"><?php echo $i ?></a>
+        <?php else:?>
+            <a href="<?php echo $this->url(array('page' => $i), $this->route_name) ?>" class="btn btn-default btn-sm <?php echo $cls ?>"><?php echo $i ?></a>
+        <?php endif;?>
+    <?php } ?>
+</div>
+
+<script type="text/javascript">
+    function getLanguageParam(a) {
+        var url = location.href;
+
+        if (url.indexOf("?language=en") > -1) {
+            var href = $(a).attr("href");
+
+            $(a).attr("href", href + "?language=en");
+        }
+    }
+</script>

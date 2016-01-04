@@ -1,0 +1,124 @@
+<div class="container breadc">
+    <div class="cn" style="display: none">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/">首页</a>
+                <span class="xsplt">/</span>
+                <a href="/case/list">工程案例</a>
+                <span class="xsplt">/</span>
+                <span class="xsexp"><?php echo $this->model->name ?></span>
+            </div>
+        </div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/?language=en">Home</a>
+                <span class="xsplt">/</span>
+                <a href="/case/list?language=en">PROJECTS</a>
+                <span class="xsplt">/</span>
+                <span class="xsexp"><?php echo $this->model->name_en ?></span>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    h1 {
+        font-size: 24px;
+        padding:0;
+        margin: 0 0 20px 0;
+    }
+    #relatx {
+        height:1px; background:#E2E2E2;margin-bottom:20px;
+    }
+    #relatx .tt {
+        margin-bottom:25px;padding-top:20px;font-size:18px;
+    }
+    #t2kike {
+        width: 50px; height: 3px; background:#478bd2;margin-bottom:15px;
+    }
+    #fjo2d {
+        color:#999;line-height: 24px;margin-bottom:40px;
+    }
+    .relatgall {
+        width:160px;
+        height:120px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        float:left;
+        margin-bottom:10px;
+        margin-right:10px;
+        display:inline-block;
+    }
+</style>
+<div class="container mb30">
+    <div class="cn" style="display: none">
+        <div class="row">
+            <div class="col-xs-6">
+                <img src="<?php echo $this->first_photo ?>" width="100%" />
+            </div>
+            <div class="col-xs-6">
+                <h1>
+                    <?php echo $this->model->name ?>
+                </h1>
+                <div id="t2kike"></div>
+                <p id="fjo2d">
+                    <?php echo $this->model->content ?>
+                </p>
+
+                <!--判断，如果该案例有关联产品，就显示以下模块；若无关联产品，则不显示-->
+                <?php if (count($this->products)):?>
+                    <div id="relatx">
+                        <div class="tt">
+                            相关产品
+                        </div>
+                        <div>
+                            <?php foreach ($this->products as $p):?>
+                                <a href="/product/info/<?php echo $p['id'] ?>" class="relatgall" style="background-image:url(<?php echo $p['photo'] ?>);"></a>
+                            <?php endforeach;?>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="row">
+            <div class="col-xs-6">
+                <img src="<?php echo $this->first_photo ?>" width="100%" />
+            </div>
+            <div class="col-xs-6">
+                <h1>
+                    <?php echo $this->model->name_en ?>
+                </h1>
+                <div id="t2kike"></div>
+                <p id="fjo2d">
+                    <?php echo $this->model->content_en ?>
+                </p>
+
+                <!--判断，如果该案例有关联产品，就显示以下模块；若无关联产品，则不显示-->
+                <?php if (count($this->products)):?>
+                    <div id="relatx">
+                        <div class="tt">
+                            RELATED PRODUCTS
+                        </div>
+                        <div>
+                            <?php foreach ($this->products as $p):?>
+                                <a href="/product/info/<?php echo $p['id'] ?>?language=en" class="relatgall" style="background-image:url(<?php echo $p['photo'] ?>);"></a>
+                            <?php endforeach;?>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".header").find(".selected").removeClass("selected");
+        $(".header").find(".project").addClass("selected");
+    });
+</script>

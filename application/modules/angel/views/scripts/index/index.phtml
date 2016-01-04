@@ -1,0 +1,276 @@
+<div id="cst-space">
+    <div class="sid-bts lt"></div>
+    <div class="sid-bts rt"></div>
+    <div id="btc-lst">
+<!--        <div class="itm selected"></div>-->
+<!--        <div class="itm"></div>-->
+<!--        <div class="itm"></div>-->
+<!--        <div class="itm"></div>-->
+<!--        <div class="itm"></div>-->
+<!--        <div class="itm"></div>-->
+        <?php $c = 0;?>
+        <?php foreach ($this->show as $s):?>
+            <?php if ($c == 0) :?>
+                <div class="itm selected"></div>
+            <?php else  :?>
+                <div class="itm"></div>
+            <?php endif; ?>
+            <?php $c++;?>
+        <?php endforeach;?>
+    </div>
+    <div id="gall-wp">
+        <div id="gall-list">
+            <?php $c = 0;?>
+            <?php foreach ($this->show as $s):?>
+                <?php if ($c == 6):?>
+                    <?php break; ?>
+                <?php endif; ?>
+                    <div class="gall-itm" style="background-image:url(<?php echo $s?>)"></div>
+                    <?php $c++;?>
+            <?php endforeach;?>
+        </div>
+    </div>
+</div>
+
+<style>
+    .poi00 {
+        padding-top:10px;
+    }
+    .poi01 {
+        padding-top:10px;
+        line-height:20px;
+    }
+    #poi02 {
+        width:100%;
+    }
+    .poi03 {
+        padding-left:160px;
+        height:105px;
+        margin-bottom:20px;
+    }
+    .poi03 .icx {
+        position:absolute;
+        width:140px;
+        left:0;
+        top:0;
+    }
+    .poi03 .subt {
+        color:#aaa;
+        font-size:12px;
+    }
+    .poi03 .rbsubt {
+        color:#aaa;
+        font-size:12px;
+        position:absolute;
+        bottom:0;
+        right:0;
+    }
+    .poi03 .tt {
+        font-size:16px;
+        color:#333;
+        margin-bottom:4px;
+        display:inline-block;
+    }
+    .poi04 {
+        margin-bottom:20px;
+    }
+    .poi04 .icx {
+        width:100%;
+    }
+    .poi04 .tt {
+        font-size:18px;
+        padding:10px 0;
+    }
+    .poi04 .lnk {
+        display:block;
+        margin-bottom:10px;
+    }
+    .poi04 .lnk img {
+        display: block;
+    }
+    .poi-mwu {
+        box-shadow:0 0 10px rgba(0,0,0,.1);
+        padding:5px;
+        display:block;
+        margin-bottom:20px;
+    }
+    .poi-mwu:hover {
+        box-shadow:0 0 10px rgba(0,0,0,.3);
+    }
+    .poi-vmi {
+        background:url(/img/l-07.jpg) center center no-repeat;
+        background-size: cover;
+        display:block;
+        width:100%;
+        height:120px;
+    }
+    .poi-mic {
+        text-align:center;
+        padding:10px 0;
+        margin:0;
+        font-size:16px;
+        color:#333;
+    }
+</style>
+<div class="container poi00">
+    <div class="cn" style="display: none">
+        <div class="row">
+            <div class="col-xs-9">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="duatitle">
+                            <div class="inner" style="border-color:#003 !important;color:#003 !important;">产品信息</div>
+                        </div>
+                    </div>
+                    <!-- 循环显示 -->
+                    <?php $i = 0; ?>
+                    <?php foreach ($this->products as $p):?>
+                        <?php if($i<=2):?>
+                            <div class="col-xs-4">
+                                <a href="/product/info/<?php echo $p["id"] ?>" class="poi-mwu">
+                                    <div class="poi-vmi" style="background-image: url(<?php echo $p["photo"] ?>)"></div>
+                                    <p class="poi-mic"><?php echo $p["name"] ?></p>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                        <?php $i++; ?>
+                    <?php endforeach; ?>
+                </div>
+
+                <div class="clear-10"></div>
+
+                <div class="row">
+                    <div class="col-xs-5">
+                        <div class="duatitle">
+                            <div class="inner" style="border-color:#003 !important;color:#003 !important;">公司简介</div>
+                        </div>
+                        <div class="duacontent">
+                            <a href="/about?ref=profile"><img id="poi02" src="<?php echo $this->profile[0]['photo']?>"  /></a>
+                            <a href="/about?ref=profile"><p class="poi01"><?php echo $this->profile[0]['simple_content']?></p></a>
+                        </div>
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="duatitle">
+                            <div class="inner" style="border-color:#003 !important;color:#003 !important;">新闻动态</div>
+                            <a href="/news/list" class='smore'>+ 查看更多</a>
+                        </div>
+                        <div class="duacontent">
+                            <?php foreach ($this->news as $n):?>
+                                <div class="poi03">
+                                    <a href="/news/detail/<?php echo $n['id'] ?>"><img src="<?php echo $n['photo']?>" class="icx" /></a>
+                                    <a href="/news/detail/<?php echo $n['id'] ?>" class="tt"><?php echo $n['title'] ?></a>
+                                    <div class="subt"><?php echo $n['create_date'] ?></div>
+                                    <a href="/news/detail/<?php echo $n['id'] ?>" class="rbsubt">查看详细 &gt;</a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-xs-3">
+                <div class="duatitle">
+                    <div class="inner" style="border-color:#003 !important;color:#003 !important;">优秀案例</div>
+                </div>
+                <div class="duacontent">
+                    <?php $i = 0; ?>
+                    <?php foreach ($this->cases as $p):?>
+                        <?php if($i<=1):?>
+                            <div class="poi04">
+                                <a href="/case/info/<?php echo $p["id"] ?>" class="lnk"><img class="icx" src="<?php echo $p["photo"] ?>" /></a>
+                                <a href="/case/info/<?php echo $p["id"] ?>" class="tt"><?php echo $p["name"] ?></a>
+                                <p class="ct">
+                                    <?php echo $p["simple_content"] ?>
+                                </p>
+                            </div>
+                        <?php endif; ?>
+                        <?php $i++; ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="row">
+            <div class="col-xs-9">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="duatitle">
+                            <div class="inner" style="border-color:#003 !important;color:#003 !important;">Product Information</div>
+                        </div>
+                    </div>
+
+                    <!-- 循环显示 -->
+                    <?php $i = 0; ?>
+                    <?php foreach ($this->products as $p):?>
+                        <?php if($i<=2):?>
+                            <div class="col-xs-4">
+                                <a href="/product/info/<?php echo $p["id"] ?>?language=en" class="poi-mwu">
+                                    <div class="poi-vmi" style="background-image: url(<?php echo $p["photo"] ?>)"></div>
+                                    <p class="poi-mic"><?php echo $p["name_en"] ?></p>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                        <?php $i++; ?>
+                    <?php endforeach; ?>
+                </div>
+                <div class="clear-10"></div>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <div class="duatitle">
+                            <div class="inner" style="border-color:#003 !important;color:#003 !important;">Company Profile</div>
+                        </div>
+                        <div class="duacontent">
+                            <a href="/about?language=en&ref=profile"><img id="poi02" src="<?php echo $this->profile[0]['photo']?>"  /></a>
+                            <a href="/about?language=en&ref=profile"><p class="poi01"><?php echo $this->profile[0]['simple_content_en']?></p></a>
+                        </div>
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="duatitle">
+                            <div class="inner" style="border-color:#003 !important;color:#003 !important;">News</div>
+                            <a href="/news/list?language=en" class='smore'>+ More</a>
+                        </div>
+                        <div class="duacontent">
+                            <?php foreach ($this->news as $n):?>
+                                <div class="poi03">
+                                    <a href="/news/detail/<?php echo $n['id'] ?>?language=en"><img src="<?php echo $n['photo']?>" class="icx" /></a>
+                                    <a href="/news/detail/<?php echo $n['id'] ?>?language=en" class="tt"><?php echo $n['title_en'] ?></a>
+                                    <div class="subt"><?php echo $n['create_date_en'] ?></div>
+                                    <a href="/news/detail/<?php echo $n['id'] ?>?language=en" class="rbsubt">Detail &gt;</a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="duatitle">
+                    <div class="inner" style="border-color:#003 !important;color:#003 !important;">Classic Case</div>
+                </div>
+                <div class="duacontent">
+                    <?php $i = 0; ?>
+                    <?php foreach ($this->cases as $p):?>
+                        <?php if($i<=1):?>
+                            <div class="poi04">
+                                <a href="/case/info/<?php echo $p["id"] ?>?language=en" class="lnk"><img class="icx" src="<?php echo $p["photo"] ?>" /></a>
+                                <a href="/case/info/<?php echo $p["id"] ?>?language=en" class="tt"><?php echo $p["name_en"] ?></a>
+                                <p class="ct">
+                                    <?php echo $p["simple_content_en"] ?>
+                                </p>
+                            </div>
+                        <?php endif; ?>
+                        <?php $i++; ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".header").find(".selected").removeClass("selected");
+        $(".header").find(".home").addClass("selected");
+    });
+</script>

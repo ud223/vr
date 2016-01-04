@@ -1,0 +1,51 @@
+<style>
+    .btn-group {
+        margin-top:15px;
+    }
+    .itm:hover {
+        background:#F0F0F0;
+    }
+    label.xs {
+        color:#aaa;
+        font-size:smaller;
+        margin-left:5px;
+    }
+</style>
+<?php
+$model = $this->model;
+?>
+<h1 class="page-title"><?php echo $this->title ?></h1>
+<div class="btb">
+    <a id="clear-cache" class="btn btn-success" href="<?php echo $this->url(array(), 'manage-phototype-create') ?>">新建图片分类</a>
+</div>
+<div class="row">
+    <?php foreach ($this->resource as $p): ?>
+        <div class="col-md-2 itm">
+            <div class="paddingbox20px relative">
+                <p><?php echo $p['name'] ?></p>
+                <div class="btn-group">
+                    <a type="button" href="<?php echo $this->url(array(id => $p["id"]), 'manage-phototype-save') ?>" class="btn btn-info btn-sm">编辑</a>
+
+                    <?php if (count($this->photoModel->getPhotoByPhototype($p["id"])) == 0): ?>
+                        <button type="button" class="btn btn-danger btn-sm remove-phototype">删除</button>
+                    <?php else: ?>
+                        <label class="xs">不为空</label>
+                    <?php endif; ?>
+                </div>
+                <input type="hidden" class="tmp" value="<?php echo $p['id'] ?>"/>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <?php echo $this->partial('manage/partials/_paginator_bar.phtml', array('current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'manage-phototype-list')); ?>
+    </div>
+</div>
+<script type="text/javascript">
+    (function($) {
+        $('.remove-phototype').click(function() {
+            removeObject($(this), '<?php echo $this->url(array(), 'manage-phototype-remove') ?>');
+        });
+    })(jQuery);
+</script>

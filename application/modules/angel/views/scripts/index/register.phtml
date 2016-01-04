@@ -1,0 +1,154 @@
+<div id="tv-frame">
+    <div class="board">
+        <div class="title">
+            <?php echo $this->title; ?>
+            <a href="<?php echo $this->url(array(), 'login') ?>">我是会员，直接登录</a>
+        </div>
+        <div class="content">
+            <form method="post" id="validate-form">
+                <div class="bdrow">
+                    <input type="text" autocomplete="off" placeholder="用户邮箱" id="email" name="email" class="required email" data-toggle="popover" data-trigger ="manual" data-placement="right"/>
+                </div>
+                <div class="bdrow">
+                    <input type="text" autocomplete="off" placeholder="用户名" id="username" name="username" class="required" data-toggle="popover" data-trigger ="manual" data-placement="right"/>
+                </div>
+                <div class="bdrow">
+                    <input type="password" autocomplete="off" placeholder="登录密码" id="password" name="password" class="required" data-toggle="popover" data-trigger ="manual" data-placement="right"/>
+                </div>
+                <div>
+                    <ul class="pik-ul">
+                        <li class="c1">性别</li>
+                        <li class="c2"><input type="radio" name="gender" value="男" checked="checked" /></li>
+                        <li class="c3">男</li>
+                        <li class="c4"><input type="radio" name="gender" value="女" /></li>
+                        <li class="c5">女</li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+                <div>
+                    <ul class="pik-ul">
+                        <li class="c1">出生年份</li>
+                        <li class="c2">
+                            <select name="age">
+                                <?php
+                                    $curYear  = date('Y', time());
+                                    $age = $curYear - 99;
+
+                                    for ($i = 0; $i < 100; $i++) {
+                                        $tmp = $age + $i;
+
+                                        $select = "";
+
+                                        if ($tmp == 1985)
+                                            $select = "selected";
+
+                                        echo "<option value ='" . $tmp . "' " . $select . ">" . $tmp . "</option>";
+                                    }
+                                ?>
+                            </select>
+                        </li>
+
+                    </ul>
+                    <div class="clear-15"></div>
+                </div>
+                <div class="clear"></div>
+                <?php
+                $style = "";
+
+                if ($this->isManage)
+                    $style = "style='display:none'";
+                ?>
+                <div class="half-row">
+                    <input type="checkbox" name="is-agree" id="is-aggree" class="required" data-toggle="popover" data-trigger ="manual" data-placement="left"><label for="is-aggree">我已阅读并接受<a href="#">《芝士电视用户协议》</a></label>
+                </div>
+                <div class="bdrow">
+                    <button type="submit" id="confirm-btn">注册</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    #is-aggree {
+        display:inline-block;
+        float:left;
+        margin:0 5px 0 18px;
+        padding:0;
+    }
+    .half-row .popover {
+
+    }
+    .pik-ul {
+        clear:both;
+        display:block;
+        height: 36px;
+        line-height:36px;
+    }
+    .pik-ul li {
+        float:left;
+        height: 36px;
+        line-height:36px;
+        list-style: none;
+    }
+    .pik-ul li.c1 {
+        margin-left:7px;
+        text-align:left;
+        width:120px;
+    }
+    .pik-ul li.c2 {
+        margin-right:5px;
+    }
+    .pik-ul li.c3 {
+        margin-right:20px;
+    }
+    .pik-ul li.c4 {
+        margin-right:5px;
+
+    }
+    .pik-ul li.c5 {
+
+    }
+    
+    select {
+        border:none;
+        border-radius:4px;
+        padding:2px;
+    }
+</style>
+<script type='text/javascript'>
+    $(document).ready(function() {
+<?php if ($this->error): ?>
+            $('.content').paper({type: 'danger', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-minus-sign"></b> <?php echo $this->error ?>');
+<?php endif; ?>
+//        $("#validate-form").validate();
+        $("#validate-form").validate({
+            rules: {
+                username: {
+                    required: true,
+                    minlength: 4
+                },
+                password: {
+                    required: true,
+                    minlength: 6
+                },
+                email: {
+                    remote: {
+                        url: "/isemailcanbeused",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            email: function() {
+                                return $('#email').val();
+                            }
+                        }
+                    }
+                }
+            },
+            messages: {
+                email: {
+                    remote: "该邮箱已经存在，请更换其他邮箱或者直接登录"
+                }
+            }
+        });
+    });
+</script>

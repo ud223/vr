@@ -1,0 +1,78 @@
+<div class="photocontainer page page1">
+    <?php
+    $images = $this->company->images;
+    $firstOrigUrl = $this->companyImage($images[0]->angelname, 'orig');
+    $imgCountEachRow = 5;
+    ?>
+    <div class="photo" id="bigphotowrapper">
+        <a href="#">
+            <img id="bigphoto" class="bigphoto" width="570" height="426" src="<?php echo $firstOrigUrl ?>"/>
+        </a>
+    </div>
+    <div class="video" id="bigvideowrapper">
+        <?php echo $this->company->company_video ?>
+    </div>
+    <div class="photopages">
+        <?php
+        $i = 0;
+        foreach($images as $img) {
+            $url = $this->companyImage($img->angelname, 'medium');
+            $originUrl = $this->companyImage($img->angelname, 'orig');  
+            $className = "selected";
+            $photoClassName = "";
+
+            $spliterHtml = "";
+
+            if($i > 0) {
+                $className = "";
+            }
+            if ((($i + 1) % $imgCountEachRow) == 0) {
+                $photoClassName = "nomargin";
+
+            }
+            if($i > 0 && ($i + 1) % $imgCountEachRow == 0) {
+                $spliterHtml = "<div class='clear_15px'></div>";
+            }
+            ?>
+        <div class="photopage <?php echo $photoClassName; ?>">
+                <a class="photopagelink" href="javascript:void(0)" src="<?php echo $originUrl ?>">
+                        <img class="photopageimg" width="100" height="75" src="<?php echo $url ?>"/>
+                </a>
+                <div class="dot <?php echo $className; ?>"></div>
+        </div>
+        <?php echo $spliterHtml ?>
+
+        <?php
+            $i++;
+        }
+
+        ?>
+            <?php
+            $photoClassName = "";
+            if(strlen($this->company->company_video) > 0) {
+                if((count($images) + 1) % $imgCountEachRow == 0) {
+                    $photoClassName = "nomargin";
+                }
+                ?>
+                <div class="photopage videopage <?php echo $photoClassName ?>">
+                    <a class="photopagelink" style="background:url('<?php echo $this->logoUrl ?>') center center;)" href="javascript:void(0)">
+                        <img class="photopageimg" width="100" height="75" src="/img/video_cover.png"/>
+                    </a>
+                    <div class="dot <?php echo $className; ?>"></div>
+            </div>
+        <?php
+            }
+            ?>
+            <div class="clear"></div>
+    </div>
+</div>
+
+<div class="description page page1">
+    <div class="clear_30px"></div>
+    <p><strong>公司概况</strong></p>
+    <p>
+            <?php echo $this->company->descr ?>
+    </p>
+
+
+</div>

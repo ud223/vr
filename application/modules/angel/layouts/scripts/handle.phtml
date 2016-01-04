@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <title>芝士电视管理系统</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap -->
+
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.theme.css">
+        <link href="<?php echo $this->cssPath("global.css"); ?>" rel="stylesheet" type="text/css" />
+        
+        <script type="text/javascript" src="<?php echo $this->jsPath('jquery.1.10.2.min.js'); ?>"></script>
+        <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/js/plugin.js"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('global.js'); ?>"></script>
+        
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+            <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="container">
+            <?php echo $this->layout()->content; ?>
+        </div> <!-- /container -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,138 @@
+<div class="container breadc">
+    <div class="cn" style="display: none">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/">首页</a>
+                <span class="xsplt">/</span>
+                <span class="xsexp"><?php echo $this->category ?></span>
+            </div>
+        </div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/?language=en">Home</a>
+                <span class="xsplt">/</span>
+                <span class="xsexp"><?php echo $this->category_en ?></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mb30">
+    <div class="cn" style="display: none">
+        <div class="row">
+            <div class="col-xs-3">
+                <ul class="sid-ul-lst">
+                    <?php if ($this->category_id == "all"): ?>
+                <li class="selected">
+                <?php else: ?>
+                    <li>
+                        <?php endif; ?>
+                        <a href="/product/list/all">
+                            全部
+                        </a>
+                    </li>
+                    <?php foreach ($this->categorys as $category): ?>
+                        <?php if ($category->id == $this->category_id): ?>
+                            <li class="selected">
+                        <?php else: ?>
+                            <li>
+                        <?php endif; ?>
+                        <a href="/product/list/<?php echo $category->id ?>">
+                            <?php echo $category->name ?>
+                        </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <div class="col-xs-9">
+                <div>
+                    <?php $c = 1; ?>
+                    <?php foreach ($this->products as $p): ?>
+                    <?php if ($c % 3 == 0) : ?>
+                    <div class="gallsitm last">
+                        <?php else : ?>
+                        <div class="gallsitm">
+                            <?php endif; ?>
+                            <a href="/product/info/<?php echo $p["id"] ?>" class="imga"
+                               style="background-image:url(<?php echo $p["photo"] ?>)"></a>
+                            <a href="/product/info/<?php echo $p["id"] ?>" class="nmtt"><?php echo $p["name"] ?></a>
+                        </div>
+
+                        <?php $c++; ?>
+                        <?php endforeach; ?>
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear-50"></div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <?php echo $this->partial('manage/partials/_paginator_bar.phtml', array('category_id' => $this->category_id, 'current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'product-list')); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="en" style="display: none">
+            <div class="row">
+                <div class="col-xs-3">
+                    <ul class="sid-ul-lst">
+                        <?php if ($this->category_id == "all"): ?>
+                    <li class="selected">
+                    <?php else: ?>
+                        <li>
+                            <?php endif; ?>
+                            <a href="/product/list/all?language=en">
+                                All
+                            </a>
+                        </li>
+                        <?php foreach ($this->categorys as $category): ?>
+                            <?php if ($category->id == $this->category_id): ?>
+                                <li class="selected">
+                            <?php else: ?>
+                                <li>
+                            <?php endif; ?>
+                            <a href="/product/list/<?php echo $category->id ?>?language=en">
+                                <?php echo $category->name_en ?>
+                            </a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <div class="col-xs-9">
+                    <div>
+
+                        <?php $c = 1; ?>
+                        <?php foreach ($this->products as $p): ?>
+                            <?php if ($c % 3 == 0) : ?>
+                                <div class="gallsitm last">
+                            <?php else : ?>
+                            <div class="gallsitm">
+                                <?php endif; ?>
+                                <a href="/product/info/<?php echo $p["id"] ?>?language=en" class="imga"
+                                   style="background-image:url(<?php echo $p["photo"] ?>)"></a>
+                                <a href="/product/info/<?php echo $p["id"] ?>?language=en" class="nmtt"><?php echo $p["name_en"] ?></a>
+                            </div>
+
+                            <?php $c++; ?>
+                        <?php endforeach; ?>
+
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear-50"></div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <?php echo $this->partial('manage/partials/_paginator_bar.phtml', array('category_id' => $this->category_id, 'current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'product-list')); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".header").find(".selected").removeClass("selected");
+                $(".header").find(".product").addClass("selected");
+            });
+        </script>

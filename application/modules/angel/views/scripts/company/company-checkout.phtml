@@ -1,0 +1,184 @@
+<?php
+$company = $this->company;
+$funding_mini_unit_rmb = $company->funding_mini_unit * 1000;
+$user = $this->me->getUser();
+?>
+<div class="fullwrapper">
+        <div class="container_24">
+                <div class="grid_24 checkoutflow">
+                        <span class="black">签署条款</span>
+                        <span> - </span>
+                        <span>安全支付</span>
+                        <span> - </span>
+                        <span>成功提交</span>
+                </div>
+        </div>
+</div>
+<div class="container_24 main">
+    <div class="grid_15 ltside">
+            <div class="radiusall_4px commonshadow docs">
+                    <div class="head">
+                            <div class="tab" name="tab" id="tab">
+                                    <a href="javascript:void(0)" class="tabitem selected radiusall_2px">签署条款</a>
+<!--                                    <a href="javascript:void(0)" class="tabitem radiusall_2px">其他阅读文档</a>-->
+                                    <div class="clear"></div>
+                            </div>
+                    </div>
+                    <div class="content songti">
+                            <h1>借贷及债转股条款</h1>
+                            <p>
+                            如果筹资日期达到后，筹资大于等于筹资目标额度，执行以下条款
+                            </p>
+                            <p>
+                            如果筹资日期达到后，筹资未能成功，所有款项将百分之百退还到贷方账户，不执行任何条款。
+                            </p>
+                            <div class="clear_5px"></div>
+                            <hr/>
+                            <div class="clear_5px"></div>
+                            <table>
+                                    <tr>
+                                            <td class="col1 bold">借贷金额: </td>
+                                            <td>借贷金额总计人民币<?php echo $this->amount ?>元 </td>
+                                    </tr>
+                                    <tr>
+                                            <td class="bold">贷方:</td>
+                                            <td><?php echo $user->username ?>－<?php echo $user->getUserTypeInChinese() ?></td>
+                                    </tr>
+                                    <tr>
+                                            <td class="bold">借贷期限:</td>
+                                            <td>自借贷完成之日起 5 年</td>
+                                    </tr>
+                                    <tr>
+                                            <td class="bold">利息:</td>
+                                            <td>单利为应付贷款额的 3 % ； 借贷期限到期时支付利息；如果债转成股则免除利息 </td>
+                                    </tr>
+                                    <tr>
+                                            <td class="bold">债转股条件:</td>
+                                            <td>在借贷期限以内，当公司发生下一轮融资且融资金额不低于人民币 20 万元时，该债务自动转为股份。或由贷方选择可在任何时刻转为股份。</td>
+                                    </tr>
+                                    <tr>
+                                            <td class="bold">转换所得股份: </td>
+                                            <td>根据以上借贷金额和转股价格，如果发生债转股，贷方将获得公司<?php echo $this->perc ?>%的股份。</td>
+                                    </tr>
+                                    <tr>
+                                            <td class="bold">费用:</td>
+                                            <td>各方承担在债转股中各自所需费用。</td>
+                                    </tr>
+                            </table>
+                            <div class="clear_5px"></div>
+                            <hr/>
+                            <div class="clear_5px"></div>
+                            <p>
+                            以上条款仅代表双方借贷和转股所达成的共识和意愿，不具备法律效力。
+                            </p>
+                            <p class="bold">
+                            详细法律条款见《债转股合同》。
+                            </p>
+                            <p>
+                            借贷完成时间以借贷款实际转出为准。
+                            </p>
+
+                    </div>
+                    <div class="footer">
+<!--                            <a href="#tab" class="btn btn_white gbtnnoicon">查看其他阅读文档</a>-->
+                    </div>
+
+            </div>
+            <div class="clear_20px"></div>
+            <p class="gray aligncenter">* 以上所有电子文档在投资完成后将以电子邮件形式发送到你的注册邮箱</p>
+            <div class="clear_30px"></div>
+            <div class="paddingbox20px confirmpanel commonshadow">
+                    <div class="needpaperwrapper aligncenter">
+                            <strong class="songti" for="needpaper">纸质法律合同收件地址</strong>
+                    </div>
+                    <div class="address">
+                            <p>收件人</p>
+                            <div class="clear_5px"></div>
+                            <input id="contact_receiver" type="text" class="text" value="<?php echo $user->username ?>"/>
+                            <div class="clear_10px"></div>
+                            <p>收件地址</p>
+                            <div class="clear_5px"></div>
+                            <textarea id="contact_address" class="text nomargin"><?php echo $user->address ?></textarea>
+                            <div class="clear_10px"></div>
+                            <p>联系电话</p>
+                            <div class="clear_5px"></div>
+                            <input id="contact_phone" type="text" class="text" value="<?php echo $user->phone ?>"/>
+                            <div class="clear_5px"></div>
+                    </div>
+                    
+                    <div class="clear"></div>
+            </div>
+            <div class="clear_20px"></div>
+            <div>
+                <input class="btn" id="submitbtn" type="button" value="确认，下一步"/>
+            </div>
+            
+    </div>
+    <div class="grid_9 rtside">
+
+        <?php echo $this->partial('company/partials/_company_card.phtml', array('user'=>$this->me->getUser(), 'company'=>$company, 'logoUrl'=>$this->logoUrl, 'funding_mini_unit_perc'=>$this->funding_mini_unit_perc, 'show_btns'=>false, 'amount'=>$this->amount)); ?>
+        
+        <?php if(strlen($company->additional_rights)>0) {
+            
+        ?>
+        <div class="sideblock">
+            
+                <div class="head">
+                        附加权益
+                </div>
+                <div class="body">
+                        <div class="imgs">
+                                <p><?php echo $company->additional_rights ?></p>
+                                <div class="clear"></div>
+                        </div>
+                </div>
+        </div>
+        <?php
+        }
+        ?>
+        
+        <?php echo $this->partial('company/partials/_company_block_investor_and_guarantor.phtml', array('company'=>$company, 'show_guarantors'=>true)); ?>
+        
+        <?php echo $this->partial('company/partials/_company_block_investors.phtml', array('company'=>$company)); ?>
+        
+    </div>
+</div>
+<div class="clear_50px"></div>
+<script type="text/javascript">
+    (function($){
+        $('body').addClass('checkout');
+        
+        var companyId = '<?php echo $company->id ?>';
+        var funding_mini_unit_rmb = <?php echo $funding_mini_unit_rmb ?>;
+        var blocks = $('.page');
+
+        $('#submitbtn').click(function(){
+            var receiver = $('#contact_receiver').val();
+            var phone = $('#contact_phone').val();
+            var address = $('#contact_address').val();
+            
+            var pass = true;
+            if(receiver.length === 0) {
+                $('#contact_receiver').validResultShow('error', '请输入正确的收件人名');
+                pass = false;
+            }
+            if(phone.length === 0) {
+                $('#contact_phone').validResultShow('error', '请输入正确的收件人联系电话');
+                pass = false;
+            }
+            if(address.length === 0) {
+                $('#contact_address').validResultShow('error', '请输入正确的收件人地址');
+                pass = false;
+            }
+            
+            if(pass) {
+                var options = { path: '/' };
+                $.cookie('contract_receiver', receiver, options);
+                $.cookie('contract_phone', phone, options);
+                $.cookie('contract_address', address, options);
+                
+                location.href='<?php echo $this->url(array('id'=>$this->company->id), 'company-checkout-pay') ?>';
+            }
+        });
+    })(jQuery);
+</script>

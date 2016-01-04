@@ -1,0 +1,106 @@
+<div class="container breadc">
+    <div class="cn" style="display: none">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/">首页</a>
+                <span class="xsplt">/</span>
+                <span class="xsexp">工程案例</span>
+            </div>
+        </div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/?language=en">Home</a>
+                <span class="xsplt">/</span>
+                <span class="xsexp">PROJECTS</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mb30">
+    <div class="cn" style="display: none">
+        <div class="row">
+            <style>
+                .gallsitm {
+                    margin-right:23px;
+                }
+            </style>
+            <div class="col-xs-12">
+                <div>
+                    <?php
+                    $c = 0;
+                    ?>
+                    <?php foreach ($this->resource as $p): ?>
+                        <?php $c ++; ?>
+                        <?php if ($c % 4 == 0): ?>
+                            <div class="gallsitm last">
+                                <a href="/case/info/<?php echo $p["id"]?>" class="imga" style="background-image:url(<?php echo $p["photo"]?>)"></a>
+                                <a href="/case/info/<?php echo $p["id"]?>" class="nmtt"><?php echo $p["name"] ?></a>
+                            </div>
+                            <div class="clear"></div>
+                        <?php else: ?>
+                            <div class="gallsitm">
+                                <a href="/case/info/<?php echo $p["id"]?>" class="imga" style="background-image:url(<?php echo $p["photo"]?>)"></a>
+                                <a href="/case/info/<?php echo $p["id"]?>" class="nmtt"><?php echo $p["name"] ?></a>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+
+
+                </div>
+                <div class="clear"></div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <?php   echo $this->partial('manage/partials/_paginator_bar.phtml', array('current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'case-list'));  ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="row">
+            <style>
+                .gallsitm {
+                    margin-right:23px;
+                }
+            </style>
+            <div class="col-xs-12">
+                <div>
+                    <?php
+                    $c = 0;
+                    ?>
+                    <?php foreach ($this->resource as $p): ?>
+                        <?php $c ++; ?>
+                        <?php if ($c % 4 == 0): ?>
+                            <div class="gallsitm last">
+                                <a href="/case/info/<?php echo $p["id"]?>?language=en" class="imga" style="background-image:url(<?php echo $p["photo"]?>)"></a>
+                                <a href="/case/info/<?php echo $p["id"]?>?language=en" class="nmtt"><?php echo $p["name_en"] ?></a>
+                            </div>
+                            <div class="clear"></div>
+                        <?php else: ?>
+                            <div class="gallsitm">
+                                <a href="/case/info/<?php echo $p["id"]?>?language=en" class="imga" style="background-image:url(<?php echo $p["photo"]?>)"></a>
+                                <a href="/case/info/<?php echo $p["id"]?>?language=en" class="nmtt"><?php echo $p["name_en"] ?></a>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+
+                </div>
+                <div class="clear"></div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <?php   echo $this->partial('manage/partials/_paginator_bar.phtml', array('current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'case-list'));  ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".header").find(".selected").removeClass("selected");
+        $(".header").find(".project").addClass("selected");
+    });
+</script>

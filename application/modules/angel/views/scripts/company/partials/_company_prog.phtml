@@ -1,0 +1,25 @@
+
+        <div class="progressbar">
+            <?php 
+                $ltclass = "";
+                if($this->company->getFundedAmt() <= 0) {
+                    $ltclass = " lt_empty";
+                }
+
+                $rtclass = "";
+                if($this->company->getFundedAmt() >= $this->company->getExpectedFundingAmt()) {
+                    $rtclass = " rt_full";
+                }
+
+                $progline = ($this->company->getFundedAmt() / $this->company->getExpectedFundingAmt()) * 100;
+
+            ?>
+                <div class="lt <?php echo $ltclass ?>"></div>
+                <div class="rt <?php echo $rtclass ?>"></div>
+                <div class="raised" style='left:<?php echo ($progline - 6) ?>%'></div>
+                <div class="target"></div>
+                <div class="progressline" style='width:<?php echo $progline ?>%'></div>
+
+                <div class="raisedamount" style='left:<?php echo ($progline - 6) ?>%'>￥<?php echo $this->company->getFundedAmt() ?>万</div>
+                <div class="targetamount">￥<?php echo $this->company->getExpectedFundingAmt() ?>万</div>
+        </div>

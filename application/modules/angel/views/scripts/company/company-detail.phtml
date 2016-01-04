@@ -1,0 +1,230 @@
+<?php
+$company = $this->company;
+$funding_mini_unit_rmb = $company->funding_mini_unit
+?>
+<style type="text/css">
+    .agpopupframe {
+        position:absolute !important;
+        width:570px;
+    }
+</style>
+<div class="titleblock fullwrapper">
+    <div class="container_24">
+            <div class="grid_14 lt">
+                    <h1> 
+                            <?php echo $company->name ?>
+                    </h1>
+                    <h2>
+                            <?php echo $company->brief_descr ?>
+                    </h2>
+            </div>
+            <div class="grid_10 rt">
+                    <!-- JiaThis Button BEGIN -->
+                    <div class="jiathis_style">
+                            <a class="jiathis_button_qzone"></a>
+                            <a class="jiathis_button_tsina"></a>
+                            <a class="jiathis_button_tqq"></a>
+                            <a class="jiathis_button_renren"></a>
+                            <a class="jiathis_button_kaixin001"></a>
+                            <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+                            <a class="jiathis_counter_style"></a>
+                    </div>
+                    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1362199232015933" charset="utf-8"></script>
+                    
+
+                    <!-- JiaThis Button END -->
+            </div>
+    </div>
+</div>
+
+<div class="container_24 main">
+    
+    
+    <div class="grid_24 tab">
+            <a href="javascript:void(0)" for="page1" class="tabitem selected radiusall_2px">公司基本信息</a>
+            <a href="javascript:void(0)" for="page2" class="tabitem radiusall_2px">创业者自述</a>
+            <a href="javascript:void(0)" for="page3" class="tabitem radiusall_2px">融资文档</a>
+            <div class="clear_5px"></div>
+    </div>
+    <div class="grid_15 ltside">
+            
+            <?php echo $this->partial('company/partials/_company_descr.phtml', array('company'=>$company, 'logoUrl'=>$this->logoUrl)); ?>
+        
+            <?php echo $this->partial('company/partials/_company_startup.phtml', array('company'=>$company)); ?>
+            
+            <?php echo $this->partial('company/partials/_company_files.phtml', array('company'=>$company, 'type_fund_spec'=>$this->type_fund_spec, 'type_business_licence'=>$this->type_business_licence, 'type_funder_spec'=>$this->type_funder_spec, 'type_funder_decision'=>$this->type_funder_decision, 'type_credit_report'=>$this->type_credit_report, 'type_personal_credit_report'=>$this->type_personal_credit_report, 'type_financial_report'=>$this->type_financial_report, 'type_support_files'=>$this->type_support_files )); ?>
+            
+            <?php echo $this->partial('company/partials/_company_messages.phtml', array()); ?>
+    </div>
+    <div class="grid_9 rtside">
+        <?php echo $this->partial('company/partials/_company_card.phtml', array('user'=>$this->me->getUser(), 'company'=>$company, 'logoUrl'=>$this->logoUrl, 'funding_mini_unit_perc'=>$this->funding_mini_unit_perc, 'show_btns'=>true)); ?>
+
+        <?php if(strlen($company->additional_rights)>0) {
+            
+        ?>
+        <div class="sideblock">
+            
+                <div class="head">
+                        附加权益
+                </div>
+                <div class="body">
+                        <div class="imgs">
+                                <p><?php echo $company->additional_rights ?></p>
+                                <div class="clear"></div>
+                        </div>
+                </div>
+        </div>
+        <?php
+        }
+        ?>
+        
+        <?php echo $this->partial('company/partials/_company_block_investor_and_guarantor.phtml', array('company'=>$company, 'show_guarantors'=>true)); ?>
+        
+        <?php echo $this->partial('company/partials/_company_block_investors.phtml', array('company'=>$company)); ?>
+
+        <div class="sideblock">
+                <div class="head">
+                        你可能感兴趣的公司
+                </div>
+                <div class="body">
+                        <div class="imgs">
+                                <a href="#" class="img">
+                                        <img src="img/photos/person1.jpg" />
+                                </a>
+                                <a href="#" class="img">
+                                        <img src="img/photos/person2.jpg" />
+                                </a>
+                                <a href="#" class="img">
+                                        <img src="img/photos/person3.jpg" />
+                                </a>
+                                <a href="#" class="img">
+                                        <img src="img/photos/person4.jpg" />
+                                </a>
+                                <a href="#" class="img">
+                                        <img src="img/photos/person5.jpg" />
+                                </a>
+                                <a href="#" class="img">
+                                        <img src="img/photos/person5.jpg" />
+                                </a>
+                                <div class="clear"></div>
+                        </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<div id="template" class="hidden">
+            <div class="paddingbox20px">
+                    <ul class="songti caltermsheets">
+                            <li>
+                                    <span class="bullet"></span>
+                                    <p>简要介绍这是一个债转股形式完成的投资。</p>
+                            </li>
+                            <li>
+                                    <span class="bullet"></span>
+                                    <p>简单阐述融资成功和不成功的结果</p>
+                            </li>
+
+                            <li>
+                                    <span class="bullet"></span>
+                                    <p>介绍我们投资付款的方式，支付宝和网银</p>
+                            </li>
+
+                            <li>
+                                    <span class="bullet"></span>
+                                    <p>其他投资注意事项</p>
+                            </li>
+
+                    </ul>
+
+                    <div class="clear_10px"></div>
+
+                    <div class="calpanel">
+                            <p class="bold font14px">请输入投资金额</p>
+                            <div class="clear_5px"></div>
+                            <div class="relative">
+                                    <input type="text" id="caltext" class="text radiusall_2px" value="<?php echo $funding_mini_unit_rmb ?>"/>
+                                    <span class="currencysymbol">￥</span>
+                                    <input type="button" id="calbtn" value="计算股份" class="btn"/>
+                                    <div class="clear_5px"></div>
+                                    <p class="gray">* 最小投资单位为人民币<?php echo $funding_mini_unit_rmb ?>元，并且请输入<?php echo $funding_mini_unit_rmb ?>的整数倍数</p>
+                            </div>
+                            <div class="result">
+                                    <div class="toptip shadowbox45degree radiusall_4px">
+                                        <span>投资￥<strong id="investamount">1000</strong> = <?php echo $company->name ?> <strong id="investperc" class="green">0.01</strong>% 股份</span>
+                                            <div class="clear_5px"></div>
+                                            <input type="button" id="nextbtn" class="btn btn_green nomargin" value="下一步" />
+                                            <div class="clear_5px"></div>
+                                    </div>
+                            </div>
+                    </div>
+
+            </div>
+    </div>
+
+
+<script type="text/javascript">
+    (function($){
+        $('body').addClass('detail');
+        
+        var companyId = '<?php echo $company->id ?>';
+        var funding_mini_unit_rmb = <?php if($funding_mini_unit_rmb) { echo $funding_mini_unit_rmb; } else { echo 0; } ?>;
+        var blocks = $('.page');
+        
+        bindTabItem(blocks, 'tabitem');
+        
+        bindPhotoPage();
+        
+        
+        var left = $('.ltside').offset().left;
+        var options = {title:'在线投资计算器', left:left};
+        $('#invest').popup(options);
+        
+        // 检验输入所否为整数，并且大于最小投资单位
+        $('#caltext').change(function(e){
+            var object = $(e.target);
+            var val = object.val();
+            
+            if(isNaN(val)){
+                object.val(funding_mini_unit_rmb);
+            } else if(val < funding_mini_unit_rmb) {
+                object.val(funding_mini_unit_rmb);
+            }
+            
+            var object = $(e.target);
+            var wrapper = findParentByClass(object, 'calpanel');
+            var result = wrapper.find('.result');
+            result.slideDown(150,function(){
+                    var top = ($(window).height() - $('.agpopupframe').height())/2;
+                    $('.agpopupframe').animate({top:top});
+                    result.attr('display', 'yes');
+            });
+            var val = parseInt(wrapper.find('#caltext').val());
+            wrapper.find('#investamount').html(val);
+
+            var data = {'company_id': companyId, 'invest_amount': val};
+            $.post('<?php echo $this->url(array(), 'get-invest-perc')?>', data, function(response){
+                $('#investperc').html(response);
+            });
+        });
+        
+        $('#calbtn').click(function(){
+            $('#caltext').change();
+        });
+        
+        $('#nextbtn').click(function(e){
+            var object = $(e.target);
+            var val = findParentByClass(object, 'calpanel').find('#caltext').val();
+            val = parseInt(val);
+            if(!isNaN(val)){
+                var options = { path: '/' };
+                $.cookie('investamount', val, options);
+                $.cookie('investcompany', companyId, options);
+                location.href="<?php echo $this->url(array('id'=>$this->company->id), 'company-checkout') ?>";
+            } else {
+                alert('金额请输入整数');
+            }
+        });
+        
+    })(jQuery);
+</script>

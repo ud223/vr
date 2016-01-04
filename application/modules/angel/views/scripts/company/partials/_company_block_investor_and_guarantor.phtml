@@ -1,0 +1,41 @@
+<div class="sideblock">
+        <div class="head">
+                创业者和担保人
+        </div>
+        <div class="body">
+                <p class="songti">创业者</p>
+                <div class="imgs">
+                    <?php
+                    $owner = $this->company->owner;
+                    $ownerProfileImage = $this->profileImage($owner->profile_image,'normal');
+                    ?>
+                        <a title="<?php echo $owner->username?>" href="<?php echo $this->url(array('id'=>$owner->id), 'user-home') ?>" title="<?php echo $owner->username; ?>" class="img">
+                                <img src="<?php echo $ownerProfileImage; ?>" />
+                        </a>
+                        <div class="clear"></div>
+                </div>
+                <div class="clear_10px"></div>
+                <?php
+                if($this->show_guarantors) {
+                ?>
+                <p class="songti">担保人</p>
+                <div class="imgs">
+                        <?php
+                        foreach($this->company->guarantor_candidate as $candidate) {
+                            $candidatePhoto = $this->profileImage($candidate->user->profile_image,'normal');
+                            ?>
+                            <a title="<?php echo $candidate->user->username?>" href="<?php echo $this->url(array('id'=>$candidate->user->id), 'user-home') ?>" class="img">
+                                <img src="<?php echo $candidatePhoto ?>" />
+                            </a>
+                            <?php
+                        }
+                        ?>
+                    
+                        <div class="clear"></div>
+                </div>
+                
+                <?php
+                }
+                ?>
+        </div>
+</div>

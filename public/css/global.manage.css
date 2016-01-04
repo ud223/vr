@@ -1,0 +1,54 @@
+/*
+* Reset the bootstrap css
+*/
+.input-group {
+    margin-bottom:2px;
+}
+form[role='form'] {
+    margin-bottom:30px;
+}
+
+
+
+
+* {
+    font-family:"microsoft yahei";
+}
+.intlbd {
+    background: #FFF;
+    box-shadow:inset 0 0 1px rgba(0,0,0,0.4);
+    border-top: 3px solid #339bfc;
+    padding: 20px;
+    text-align:center;
+}
+.page-title {
+    font-size:24px;
+    margin-bottom:30px;
+}
+.short-txt {
+    width:80px;
+}
+.btb {
+    padding:20px 0;
+    text-align:right;
+}
+#save-btn {
+    margin-top:20px;
+}
+.gy-program-block {
+    padding:10px;
+}
+.gy-program-block .gy-sd {
+    float:left;
+    padding:40px;
+}
+.gy-program-block .gy-sd .sel {
+    background:#04CC54;
+    color:#FFF;
+    font-size:smaller;
+    padding:2px 5px;
+    position:absolute;
+    right:0;
+    top:0;
+    width:auto;
+}

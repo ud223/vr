@@ -1,0 +1,6 @@
+<p><?php echo $this->params['name'] ?>:</p>
+<p>你好，你的个人信息无法通过天使圈的审核，具体原因如下:</p>
+<p style="padding:10px; background-color: #ccc">
+    <?php echo nl2br($this->escape($this->params['reason'])); ?>
+</p>
+<p>请你根据我们的意见对你的信息进行修改，然后重新提交。</p>

@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link href="<?php echo $this->cssPath("reset.css"); ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo $this->cssPath("text.css"); ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo $this->cssPath("global.css"); ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo $this->cssPath("admin.global.css"); ?>" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->jsPath('plugin.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->jsPath('global.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->jsPath('admin.global.js'); ?>"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		resizeSidebar();
+		$(window).resize(resizeSidebar);
+	});
+	
+</script>
+<title>天使圈后台管理系统</title>
+</head>
+
+<body>
+<div class="sidebar cd_sidebar">
+
+        <a href="#" class="sideitem cd_selected">等待审批用户</a>
+        <a href="#" class="sideitem">通过审批用户</a>
+
+</div>
+<div class="admintop cd_top">
+
+        <ul class="adminmenu">
+                <li>
+                        <a href="#" class="bold itemA">
+                                实名认证申请
+                        </a>
+                </li>
+                <li>
+                        <a href="#" class="bold itemB">
+                                公司信息认证申请
+                        </a>
+                </li>
+
+        </ul>
+</div>
+    <?php echo $this->layout()->content; ?>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+<?php
+$owner = $this->owner;
+$company = $this->company;
+?>
+
+<div class="bdetail">
+    <ul>
+        <li>
+            <a href="<?php echo $this->profileImage($owner->profile_image, 'orig') ?>" target="_blank">
+                <img src="<?php echo $this->profileImage($owner->profile_image, 'normal')?>" class="thumbnail"/>
+            </a>
+        </li>
+        <li>
+            <p class="clabel gray">创业者姓名: <?php echo $owner->username ?></p>
+            <p class="clabel gray">电话: <?php echo $owner->phone ?></p>
+            <p class="clabel gray">电子邮箱: <?php echo $owner->email ?></p>
+            <p class="clabel gray">公司名: <a href="#companytitle"><?php echo $company->name ?></a></p>
+        </li>
+    </ul>
+    <div class="clear"></div>
+</div>

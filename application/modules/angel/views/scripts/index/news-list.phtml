@@ -1,0 +1,107 @@
+<style>
+    .ihlist {
+        cursor: pointer;
+    }
+    .ihlist .itm {
+        padding:20px;
+        border:1px solid #EEE;
+        margin-top:30px;
+        height: 180px;
+    }
+    .ihlist .itm:hover {
+        background: #478bd2;
+        border-color: #478bd2;
+    }
+    .ihlist .itm .btt {
+        font-size:18px;
+        margin-bottom:5px;
+        display:block;
+        color:#333;
+    }
+    .ihlist .itm .time {
+        color:#aaa;
+        font-size:12px;
+    }
+    .ihlist .itm:hover .btt {
+        color:#FFF;
+    }
+    .ihlist .itm:hover .time {
+        color:#FFF;
+        opacity: .5;
+    }
+</style>
+<div class="container breadc">
+    <div class="cn" style="display: none">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/">首页</a>
+                <span class="xsplt">/</span>
+                <span class="xsexp">新闻动态</span>
+            </div>
+        </div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/?language=en">Home</a>
+                <span class="xsplt">/</span>
+                <span class="xsexp">News</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bjobanner">
+    PUYUAN NEWS
+</div>
+<div class="clear-10"></div>
+<div class="container">
+    <div class="cn" style="display: none">
+        <div class="row">
+            <?php foreach ($this->resource as $r):?>
+
+                <div style="display:block;border-bottom:1px solid #E2E2E2;padding:15px 0 15px 250px;min-height:160px;">
+                    <a href="/news/detail/<?php echo $r["id"] ?>" style="display:block;position:absolute;left:15px;top:15px;width:180px;height:120px;background:url(<?php echo $r['photo'] ?>) center center no-repeat;background-size: cover;">
+                    </a>
+                    <a href="/news/detail/<?php echo $r["id"] ?>" style="font-size:24px;">
+                        <?php echo $r["title"] ?>
+                    </a>
+                    <div style="font-size:16px;color:#aaa;">
+                        <?php echo $r["subtitle"] ?>
+                    </div>
+                    <div style="margin-top:10px;font-size:12px;color:#fff;background:#ccc;display:inline-block;padding:2px 5px;border-radius:4px;"><?php echo $r["date"] ?></div>
+                </div>
+
+
+            <?php endforeach;?>
+        </div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="row">
+            <?php foreach ($this->resource as $r):?>
+                <div style="display:block;border-bottom:1px solid #E2E2E2;padding:15px 0 15px 250px;min-height:160px;">
+                    <a href="/news/detail/<?php echo $r["id"] ?>?language=en" style="display:block;position:absolute;left:15px;top:15px;width:180px;height:120px;background:url(<?php echo $r['photo'] ?>) center center no-repeat;background-size: cover;">
+                    </a>
+                    <a href="/news/detail/<?php echo $r["id"] ?>?language=en" style="font-size:24px;">
+                        <?php echo $r["title_en"] ?>
+                    </a>
+                    <div style="font-size:16px;color:#aaa;">
+                        <?php echo $r["subtitle_en"] ?>
+                    </div>
+                    <div style="margin-top:10px;font-size:12px;color:#fff;background:#ccc;display:inline-block;padding:2px 5px;border-radius:4px;"><?php echo $r["date_en"] ?></div>
+                </div>
+            <?php endforeach;?>
+        </div>
+    </div>
+</div>
+<div class="clear-50"></div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <?php   echo $this->partial('manage/partials/_paginator_bar.phtml', array('current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'news-list'));  ?>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".header").find(".selected").removeClass("selected");
+        $(".header").find(".news").addClass("selected");
+    });
+</script>

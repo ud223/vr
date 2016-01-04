@@ -1,0 +1,137 @@
+
+<div class="adminmain">
+        <h1>公司信息提交审核</h1>
+        <div>
+            <?php
+            $companyModel = $this->companyModel;
+            foreach($this->companies as $company) {
+                $companyLogo = $this->url(array('image'=>$companyModel->getCompanyLogo($company->logo, $this->bootstrap_options['size']['medium'])), 'company-logo');
+                $companyLogoOrig = $this->url(array('image'=>$companyModel->getCompanyLogo($company->logo, $this->bootstrap_options['size']['orig'])), 'company-logo');
+            ?>
+                
+                <div class="adminitem">
+                    <ul>
+                        <li class="col1"><a href="#" class="itemlink"><?php echo $company->name ?></a></li>
+                        <li class="col2"></li>
+                    </ul>
+                    <div class="datPoor">
+                        <input type="hidden" class="companyid" value="<?php echo  $company->id?>"/>
+                        <input type="hidden" class="companyname" value="<?php echo  $company->name?>"/>
+                        <input type="hidden" class="companyowner" value="<?php echo  $company->owner->username?>"/>
+                        <input type="hidden" class="companylogo" value="<?php echo $companyLogo ?>"/>
+                    </div>
+                    <div class="operationbar">
+                            <input type="button" class="btn btn_white gbtnnoicon adminitemdetail" value="查看详细"/> 
+                    </div>
+                </div>
+            
+            </div>
+            <?php
+            }
+            ?>
+        
+</div>
+<div id="detailTemplate" class="hidden">
+    <div class="paddingbox20px companyinfolist-popup">
+        <div style="position:relative;height:190px;">
+            <input type="hidden" id="pop_companyid" value=""/>
+            <img id="pop_profile_image" src="" style="position:absolute;left:20px;width:220px;"/>
+            <div style="margin-left:300px;top:0;min-height:180px;">
+                <p>公司名称： <strong id="pop_name" class="green"></strong></p>
+                <p>公司owner： <strong id="pop_owner" class="green"></strong></p>
+                <div class='clear_10px'></div>
+                <p><a href='#' class='btn btn_white gbtnnoicon'>查看详细信息</a></p>
+            </div>
+        </div>
+        
+        <div style="margin:0 20px;">
+            <div id="pop_refuseboard" style="width:280px;float:left;">
+                <input type="button" class="btn btn_black" id="refusebtn" value="审批拒绝通过"/>
+                <div class="clear_10px"></div>
+                <p class="songti">请填写拒绝理由</p>
+                <div class="clear"></div>
+                <textarea id="reason" style="width:220px;height:80px"></textarea>
+            </div>
+            <div id="pop_btns" style="width:270px;float:left;">
+                <input type="button" class="btn btn_green" id="approvebtn" value="审批通过"/>
+            </div>
+            
+            <div class="clear"></div>
+        </div>
+        <div class="clear_10px"></div>
+        <div id="pop_records">
+            
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+(function($){
+    var getCid = function(e){
+        var object = $(e.target);
+        var container = findParentByClass(object, 'companyinfolist-popup');
+        var company_id = container.find('#pop_companyid').val();
+        return company_id;
+    };
+    $('.adminitemdetail').click(function(e){
+        var object = $(e.target);
+        var container = findParentByClass(object, 'adminitem');
+        var company_id = container.find('.companyid').val()
+        var profile_image = container.find('.companylogo').val();
+        var company_name = container.find('.companyname').val();
+        var company_owner = container.find('.companyowner').val();
+        // set value
+        $('#pop_companyid').val(company_id);
+        $('#pop_profile_image').attr('src', profile_image);
+        $('#pop_name').html(company_name);
+        $('#pop_owner').html(company_owner);
+        $.popup({title:'公司信息提交审核'}, 'detailTemplate');
+    });
+    
+    $('#approvebtn').click(function(e){
+        if(!confirm('确定审批通过？')) {
+            return;
+        }
+        var object = $(e.target);
+        var container = findParentByClass(object, 'companyinfolist-popup');
+        var company_id = container.find('#pop_companyid').val();
+        var item = findParentByClass($(".companyid[value='" + company_id + "']"), 'adminitem');
+        var data = {'company_id': company_id};
+        $.post('<?php echo $this->url(array(), 'accept-company-info')?>', data, function(response){
+            if(response === 1) {
+                alert('操作成功');
+                $.popupClose();
+                item.remove();
+            } else {
+                alert('操作失败');
+            }
+        });
+    });
+    $('#refusebtn').click(function(e){
+        var company_id = getCid(e);
+        var item = findParentByClass($(".companyid[value='" + company_id + "']"), 'adminitem');
+        if(!confirm('确定拒绝通过审批？')) {
+            return;
+        }
+        var object = $(e.target);
+        var container = findParentByClass(object, 'companyinfolist-popup');
+        var reason = container.find($('#reason')).val();
+        if(reason.length > 0) {
+            var data = {'company_id':company_id, 'reason':reason};
+
+            $.post('<?php echo $this->url(array(), 'refused-company-info')?>', data, function(response){
+                if(response === 1) {
+                    alert('操作成功');
+                    $.popupClose();
+                    item.remove();
+                } else {
+                    alert('操作失败');
+                }
+            });
+        } else {
+            alert('必须输入拒绝原因');
+        }
+    });
+})(jQuery);
+</script>

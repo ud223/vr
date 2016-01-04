@@ -1,0 +1,57 @@
+<div class="sideblock companydetail">
+            <img src="<?php echo $this->logoUrl ?>" class="photo"/>
+            <div class="tt">
+                    <?php echo $this->company->name ?>
+            </div>
+            <div class="details">
+                <?php
+
+                ?>
+                    <strong class="yahei bold">目前已获投资：</strong><strong class="yahei green">￥<?php echo intval($this->company->funded_amt)?></strong>
+                    <div class="clear_5px"></div>
+                    <span>融资目标：</span><strong class="yahei">￥<?php echo $this->company->getExpectedFundingAmt()?>万<span class="font10px">（<?php echo $this->company->funding_stock_percent ?>%股份）</span></strong>
+                    <div class="clear_5px"></div>
+                    <span>目标融资时限：</span><strong class="yahei"><?php echo $this->company->funding_period?>天</strong>
+                    <div class="clear_5px"></div>
+                    <span>最小投资单位：</span><strong class="yahei">￥<?php echo $this->company->funding_mini_unit ?><span class="font10px">（<?php echo $this->funding_mini_unit_perc ?>%股份）</span></strong>
+
+            </div>
+            <div class="clear_30px"></div>
+            <div class="prog">
+            <?php echo $this->partial('company/partials/_company_prog.phtml', array('company'=>$this->company)); ?>
+            </div>
+            <?php
+            if($this->show_btns) {
+            ?>
+            <div class="btnwrapper">
+                <?php
+                if(!$this->user->hasAlreadyInvestedCompany($this->company->id)) {
+                ?>
+                    <input type="button" value="我要投资" class="btn" id="invest" popuptargetid="template" />
+                <?php
+                } else {
+                ?>
+                    <span class='hasbeen'>已投资</span>
+                <?php
+                }
+                ?>
+                    <input type="button" value="关注公司" class="btn btn_green"/>
+                    
+                
+            </div>
+            <?php
+            }
+            ?>
+            
+            <?php
+            if(isset($this->amount)) {
+            ?>
+            
+            <div class="paddingbox20px aligncenter bold">
+                投资金额：<?php echo $this->amount ?>
+            </div>
+            
+            <?php
+            }
+            ?>
+        </div>

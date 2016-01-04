@@ -1,0 +1,114 @@
+
+<div class="container_24 main">
+    <div class="grid_24 aligncenter">
+        <div class="clear_100px"></div>
+        <div id="eg" class="commonshadow" style="display:inline-block;">
+            <div class="editguarantee vg">
+                <div class="head">
+                    重新提交公司担保人信息
+                </div>
+                <div class="body">
+                    <table>
+                        <tr>
+                            <td class="col1">
+                                担保人姓名
+                            </td>
+                            <td>
+                                <input type="text" class="text vname"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                与担保人关系
+                            </td>
+                            <td>
+                                <input type="text" class="text vrelationship"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                担保人邮箱
+                            </td>
+                            <td>
+                                <input type="text" class="text vemail"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                担保人联系电话
+                            </td>
+                            <td>
+                                <input type="text" class="text vphone"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer">
+                    <input type="button" id="updateguaranteebtn" class="btn btn_white gbtnnoicon" value="提交担保人"/>
+                </div>
+            </div>
+        </div>
+        <div class="clear_100px"></div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    (function($){
+        $('body').addClass('loginpage');
+        $('body').addClass('companyinfo');
+        var useremail = '<?php echo $this->me->getUser()->email ?>';
+        var companyId = '<?php echo $this->company_id ?>';
+        $('#updateguaranteebtn').click(function(e){
+            var name = $('.vname').val();
+            var email = $('.vemail').val();
+            var phone = $('.vphone').val();
+            var relationship = $('.vrelationship').val();
+            
+            var object = $(e.target);
+            
+            var valid = true;
+            if(!(name.length > 0)) {
+                alert('请输入担保人姓名');
+                valid = false;
+            }
+            if(!(email.length > 0)) {
+                alert('请输入担保人邮箱');
+                valid = false;
+            }
+            if(email == useremail) {
+                alert('不可使用自己的邮箱');
+                valid = false;
+            }
+            if(!(phone.length > 0)) {
+                alert('请输入担保人电话');
+                valid = false;
+            }
+            if(!(relationship.length > 0)) {
+                alert('请输入与担保人关系');
+                valid = false;
+            }
+            if(!valid) {
+                return;
+            }
+            
+            // 提交
+            var data = { 'name': name, 'email': email, 'phone': phone, 'relationship': relationship };
+
+            $.post('<?php echo $this->url(array('company'=>$this->company_id, 'candidate'=>$this->candidate_id), 'update-candidate')?>', data, function(response){
+                alert(response);
+                return;
+                var result = response.result;
+                if(result) {
+                    if($('.addedguarantees .addedguarantee').length >= 3) {
+                        $('#guarantees_hid').val(1);
+                    }
+                    object.validResultShow('right','操作成功');
+                } else {
+                    object.validResultShow('error','操作失败，请重试');
+                }
+            });
+        });
+        
+    })(jQuery);
+</script>

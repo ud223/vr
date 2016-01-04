@@ -1,0 +1,74 @@
+<div class="container_24 main">
+        <div class="itemcontainer">
+            <?php
+            $list = $this->list;
+            
+            if($list && count($list) > 0) {
+                $i = 1;
+                
+                foreach($list as $company) {
+                    $even = $i % 2 == 0;
+                    $classAddName =  $even ? 'even' : 'odd';
+                    $images = $company->images;
+                    $firstOrigUrl = $this->companyImage($images[0]->angelname, 'orig');
+                ?>
+                
+                <div class="grid_12 itemblock">
+                    <div class="itemwrapper <?php echo $classAddName ?>">
+                        <div class="head">
+                                <p>
+                                        <?php echo $company->name?>
+                                </p>
+                                <i>
+                                        <?php echo $company->brief_descr?>
+                                </i>
+                        </div>
+                        <a href="<?php echo $this->url(array('id'=>$company->id), 'company-detail')?>" class="itemlink relative aligncenter">
+                            <img src="<?php echo $firstOrigUrl ?>" height="100%"/>
+                        </a>
+                        <div class="bar">
+                            <?php echo $this->partial('company/partials/_company_prog.phtml', array('company'=>$company)); ?>
+                            <div class="remainingtime">
+                                    <span class="line"></span>
+                                    <div class="t1">
+                                            剩余时间
+                                    </div>
+                                    <div class="t2">
+                                            <strong><?php echo $company->getLeftDays(false)?></strong><span>天</span>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php
+                    if($even) {
+                        echo "<div class='clear'></div>";
+                    }
+                    $i++;
+                }
+            } else {
+                ?>
+            
+            <div class="warningblk">
+                <p>抱歉，没有找到符合条件的公司</p>
+                <div class="clear_5px"></div>
+                <a href="/">浏览其他公司</a>
+            </div>
+                
+                <?php
+            }
+            ?>
+        </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    (function($){
+        $('body').addClass('list');
+        init();
+        listBindItemWrapper();
+
+    })(jQuery);
+</script>

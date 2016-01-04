@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>上传文档</title>
+</head>
+
+<body>
+    <form method="post" action="<?php echo $this->url(array(), 'upload-company-doc')?>" enctype="multipart/form-data">
+        <input type="file" name="doc"/>
+        <input type="hidden" name="doctype" value=""/>
+        <input type="hidden" name="status" value="<?php echo $this->result; ?>"/>
+        <?php
+        
+            if(isset($this->path)){
+        ?>
+                <input type="hidden" name="doc_id" value="<?php echo $this->doc_id; ?>"/>
+                <input type="hidden" name="path" value="<?php echo $this->path; ?>"/>
+        <?php
+            }
+        ?>
+        <?php
+        
+            if(isset($this->filename)){
+        ?>
+                <input type="hidden" name="filename" value="<?php echo $this->filename; ?>"/>
+        <?php
+            }
+        ?>        
+    </form>
+</body>
+</html>

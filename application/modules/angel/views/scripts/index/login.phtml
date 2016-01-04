@@ -1,0 +1,63 @@
+<div id="tv-frame">
+    <div class="board">
+        <div class="title">
+            <?php echo $this->title; ?>
+            <a href="<?php echo $this->url(array(), 'register') ?>">10秒注册</a>
+        </div>
+        <div class="content">
+
+            <form method="post" id="validate-form">
+                <div class="bdrow">
+                    <input type="text" autocomplete="off" placeholder="用户邮箱" id="email" name="email" data-toggle="popover" data-trigger ="manual" data-placement="right"/>
+                </div>
+                <div class="bdrow">
+                    <input type="password" autocomplete="off" placeholder="登录密码" id="password" name="password" data-toggle="popover" data-trigger ="manual" data-placement="right"/>
+                </div>
+                <div class="bdrow">
+                    <button type="submit" id="confirm-btn">登录</button>
+                </div>
+            </form>
+        </div>
+        <div class="bottom">
+            <a href="<?php echo $this->url(array(), 'forgot-password') ?>">忘记密码？</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+<?php if ($this->register): ?>
+            $('.content').paper({type: 'success', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-ok-sign"></b> 注册成功，请登录芝士电视');
+<?php endif; ?>
+<?php if ($this->error): ?>
+            $('.content').paper({type: 'danger', additionalClass: 'sign-gotmsg'}, '<b class="glyphicon glyphicon-minus-sign"></b> <?php echo $this->error ?> <a href="<?php echo $this->url(array(), 'forgot-password') ?>" class="border-btn border-btn-xs">找回密码</a>');
+<?php endif; ?>
+    });
+
+    $("#validate-form").validate({
+        rules: {
+            "password": {
+                required: true,
+                minlength: 6
+            },
+            "email": {
+                required: true,
+                email: true
+            }
+        }
+    });
+    
+    //api test
+    function test() {
+        $.ajax({
+           url: 'http://localhost/login',
+           type: 'POST',
+           data: 'email=108234154@qq.com&password=119223&format=json',
+           success: function (data){
+               console.log(data);
+           }
+        });
+    }
+   
+    //test();
+</script>

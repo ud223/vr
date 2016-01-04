@@ -1,0 +1,24 @@
+<?php
+//个人测试
+//ACCESS_ID
+define('OSS_ACCESS_ID', '');
+
+//ACCESS_KEY
+define('OSS_ACCESS_KEY', '');
+
+
+//是否记录日志
+defined('ALI_LOG')
+    || define('ALI_LOG', (getenv('ALI_LOG') ? getenv('ALI_LOG') : FALSE));
+
+//自定义日志路径，如果没有设置，则使用系统默认路径，在./logs/
+defined('ALI_LOG_PATH')
+    || define('ALI_LOG_PATH', (getenv('ALI_LOG_PATH') ? getenv('ALI_LOG_PATH') : (dirname(__FILE__).DIRECTORY_SEPARATOR.'logs'.DIRECTORY_SEPARATOR)));
+
+//是否显示LOG输出
+define('ALI_DISPLAY_LOG', FALSE);
+
+//语言版本设置
+define('ALI_LANG', 'zh');
+
+

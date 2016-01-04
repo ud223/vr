@@ -1,0 +1,17 @@
+<div style="font-family:'Microsoft Yahei';font-size:13px;margin:auto;width:600px;">
+    <p style="background:#333;padding:20px">
+        <img src="http://www.gisbuy.com/img/logo.png"/>
+    </p>
+    <div style="background:#FFF;padding:20px;margin:0">
+        <?php echo $this->layout()->content; ?>
+        <p style="padding-top: 10px">
+            产品团队
+            <br/>
+            <?php echo date('m/d/Y') ?>
+        </p>
+    </div>
+
+    <p style="background:#F8F8F8;font-size:12px;padding:20px;text-align:center;margin:0">
+        <a href="<?php echo $this->domain_url . $this->url(array(), 'about'); ?>" style="text-decoration:none;color:#AAA !important;">关于我们</a> <span style="color:#EEE">&nbsp;|&nbsp;</span> <a href="<?php echo $this->domain_url; ?>" style="text-decoration:none;color:#AAA !important;">访问网站</a> 
+    </p>
+</div>

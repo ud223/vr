@@ -1,0 +1,59 @@
+<div id="tv-frame">
+    <div style="text-align:center;margin:80px 0 50px 0;">
+        <img src="/img/logo-big.png" />
+    </div>
+    <div style="text-align:center;margin-bottom:50px;">
+        <img src="/img/slogan.png" width="450"/>
+    </div>
+    <div class="bdrow">
+        <p>输入邮箱立刻订阅芝士电视，精彩抢先看！</p>
+    </div>
+    <form method="post" id="validate-form">
+        <div class="bdrow">
+            <input type="text" autocomplete="off" placeholder="请输入您的常用邮箱" id="email" name="email" data-toggle="popover" data-trigger ="manual" data-placement="right"/>
+        </div>
+        <div class="bdrow" id="btn-bd">
+            <button type="button" id="confirm-btn">立即订阅</button>
+        </div>
+        <div class="bdrow" id="result-bd">
+        </div>
+    </form>
+</div>
+<style>
+    #tv-normal-header {
+        display:none;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function() {
+//        $('#tv-normal-header').remove();
+        $('#validate-form').validate({
+            rules: {
+                "email": {
+                    required: true,
+                    email: true
+                }
+            }
+        });
+        $("#confirm-btn").click(function() {
+            var result = $('#validate-form').valid();
+            if (result) {
+                $.ajax({
+                    url: '<?php echo $this->url(array(), "home") ?>',
+                    method: 'post',
+                    dataType: 'json',
+                    data: {email: $('#email').val()},
+                    success: function(response) {
+                        if(response) {
+                            $('#result-bd').paper({type: 'success'}, '<b class="glyphicon glyphicon-ok-sign"></b> 订阅成功，请时刻关注您的邮箱（有可能出现在垃圾箱），一大波精彩芝士电视正在向您走来！');
+                            $('#btn-bd').remove();
+                        } else {
+                            $('#result-bd').paper({type: 'danger'}, '<b class="glyphicon glyphicon-minus-sign"></b> 抱歉，订阅未能成功，请刷新页面后重试！');
+                        }
+                    }
+                });
+            }
+        });
+        $('#email').focus();
+    });
+</script>

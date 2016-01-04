@@ -1,0 +1,128 @@
+<div id="tv-frame">
+    <div class="board">
+        <div class="title">
+            <?php echo $this->title ?>
+            <span style="font-size:smaller"> - 请勾选下方兴趣选项，我们将参考您的选择精确推送精彩节目</span>
+        </div>
+        <div class="content">
+            <div class="ct">
+                <?php foreach ($this->categories as $category): ?>
+                    <?php
+                    $checked = "";
+                    $lb = "";
+                    foreach ($this->model->category as $p) {
+                        if ($category->id == $p->id) {
+                            $lb = "selected";
+
+                            break;
+                        }
+                    }
+                    ?> 
+                    <div id="<?php echo $category->id ?>" name="categorys[]" class="mslb <?php echo $lb ?> pull-left">
+                        <p class="tt"><?php echo $category->name ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="clear"></div>
+            <div id="result-panel" style="margin-top:30px;"></div>
+            <div style="margin:30px 0;">
+                <button type="button" id="save-btn" class="btn" onclick="saveUserCategory()">保存设置</button>
+            </div>
+            <input type="hidden" id="categories" value=""/>
+        </div>
+    </div>
+</div>
+<div class="clear-50"></div>
+<style>
+    #tv #tv-frame .board {
+        margin-top:30px;
+        width:800px;
+    }
+
+    .mslb {
+        background-color:rgba(0,0,0,0.15);
+        background-image:url(/img/raster_g.png);
+        background-position:center 18px;
+        background-repeat:no-repeat;
+        border-radius:5px;
+        border:1px solid transparent;
+        box-shadow:0 1px 0 rgba(255,255,255,0.1), inset 0 1px 1px rgba(0,0,0,0.1);
+        box-sizing: content-box;
+        cursor:pointer;
+        float:left;
+        height:90px;
+        margin:0 10px 10px 0;
+        padding:5px;
+        text-align:center;
+        width:150px;
+    }
+    .mslb:hover,.mslb.selected {
+        background-image:url(/img/raster_m.png);
+    }
+    .mslb.selected {
+        color:#04CC54 !important;
+    }
+    .mslb .tt {
+        display:block;
+        font-size:13px;
+        margin-top:65px;
+    }
+    .content .ct {
+        padding-left:58px;
+    }
+    .selected {
+
+    }
+</style>
+<script type="text/javascript">
+    $('document').ready(function() {
+        getSelectedCategory();
+        $('.mslb').click(function() {
+            $(this).closest('.mslb').toggleClass('selected');
+            getSelectedCategory();
+        });
+        $('#save-btn').click(function() {
+            $('#result-panel').empty().paper({type: 'success'}, '<b class="glyphicon glyphicon-ok-sign"></b> 保存成功 <a class="border-btn border-btn-xs" href="<?php echo $this->url(array(), 'show-play') ?>">看看节目有哪些变化</a>');
+        });
+    });
+
+    function getSelectedCategory() {
+        var targets = $('.mslb.selected');
+        var hd = "";
+        var arr = new Array();
+        if (targets.length) {
+            $.each(targets, function() {
+                arr.push($(this).attr('id'));
+            });
+            hd = arr.join(';');
+        }
+        $("#categories").val(hd);
+    }
+
+
+
+    function saveUserCategory(callback) {
+<?php
+$url = $this->url(array(), "api-user-category-save");
+?>
+
+        var curl = "<?php echo $url ?>";
+
+        var category = $('#categories').val();
+        if (!category) {
+            category = 'none';
+        }
+        var data = {category: category};
+
+        $.ajax({
+            url: curl,
+            dataType: 'json',
+            type: 'post',
+            data: data,
+            success: function(result) {
+                if (result.code === 0) {
+                }
+            }
+        });
+    }
+</script>

@@ -1,0 +1,90 @@
+<style>
+    h1 {
+        font-size:24px;
+    }
+    .suuex {
+        color:#aaa;
+        font-size:14px;
+        padding-bottom:20px;
+        margin-bottom:20px;
+        border-bottom:1px solid #E2E2E2;
+    }
+    .cont {
+        line-height: 28px;
+        font-size: 16px;
+        color:#888;
+    }
+</style>
+<div class="container breadc">
+    <div class="cn" style="display: none">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/">首页</a>
+                <span class="xsplt">/</span>
+                <span class="xsexp">联系我们</span>
+            </div>
+        </div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/?language=en">Home</a>
+                <span class="xsplt">/</span>
+                <span class="xsexp">Contact</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row kkcowi">
+        <div class="col-xs-6">
+            <div class="cn" style="display: none;border:1px solid #E0E0E0;">
+                <h1 class="uiwiei">联系我们</h1>
+                <div class="xsde2d"><span class="l">销售电话：</span><strong><?php echo $this->model->sale_tel?></strong></div>
+                <div class="xsde2d"><span class="l">传真：</span><strong><?php echo $this->model->fax?></strong></div>
+                <div class="xsde2d"><span class="l">电子邮箱：</span><strong><?php echo $this->model->email?></strong></div>
+                <div class="xsde2d"><span class="l">公司地址：</span><strong><?php echo $this->model->company_address?></strong></div>
+                <div class="xsde2d"><span class="l">惠州工厂地址：</span><strong><?php echo $this->model->factory_address_1?></strong></div>
+                <div class="xsde2d"><span class="l">广州工厂地址：</span><strong><?php echo $this->model->factory_address_2?></strong></div>
+            </div>
+
+            <div class="en" style="display: none;border:1px solid #E0E0E0;">
+                <h1 class="uiwiei">Contact us</h1>
+                <div class="xsde2d"><span class="l">Tel:</span><strong><?php echo $this->model->sale_tel?></strong></div>
+                <div class="xsde2d"><span class="l">Fax:</span><strong><?php echo $this->model->fax?></strong></div>
+                <div class="xsde2d"><span class="l">Emall:</span><strong><?php echo $this->model->email?></strong></div>
+                <div class="xsde2d"><span class="l">Company Address:</span><strong><?php echo $this->model->company_address_en ?></strong></div>
+                <div class="xsde2d"><span class="l">Huizhou Factory Location:</span><strong><?php echo $this->model->factory_address_1_en ?></strong></div>
+                <div class="xsde2d"><span class="l">Guangzhou Factory Location:</span><strong><?php echo $this->model->factory_address_2_en ?></strong></div>
+            </div>
+
+        </div>
+        <div class="col-xs-6">
+            <div id="allmap" style="width:100%;height:303px;box-shadow: 0 1px 5px rgba(0,0,0,.2)"></div>
+        </div>
+
+
+
+
+
+    </div>
+</div>
+<div class="clear-50"></div>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=C39a01ae2221d5afc846238539b6bbc2"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".header").find(".selected").removeClass("selected");
+        $(".header").find(".contact").addClass("selected");
+
+        var map = new BMap.Map("allmap");    // 创建Map实例
+        map.centerAndZoom(new BMap.Point(114.249099, 22.713426), 15);  // 初始化地图,设置中心点坐标和地图级别
+        map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+        map.setCurrentCity("深圳");          // 设置地图显示的城市 此项是必须设置的
+        map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+        var point = new BMap.Point(114.249099, 22.713426);
+        //map.centerAndZoom(point, 15);
+        var marker = new BMap.Marker(point);  // 创建标注
+        map.addOverlay(marker);
+    });
+</script>

@@ -1,0 +1,129 @@
+<style>
+
+
+    .itm {
+    }
+    .wp {
+        background:#F0F0F0;
+        margin-bottom:30px;
+        padding:15px;
+    }
+    .wp p {
+        font-size:12px;
+    }
+    .iwp {
+        height:160px;
+        overflow:hidden;
+        position:relative;
+        width:100%;
+    }
+    .iwp img {
+        left:0;
+        position:absolute;
+        top:0;
+    }
+    .wp label {
+        color:#5cb85c;
+    }
+    .wp ul {
+        display:block;
+        margin:15px 0 0;
+        padding:0;
+    }
+    .wp ul li {
+        display:inline-block;
+        margin-bottom:10px;
+        margin-right:5px;
+        list-style: none;
+    }
+    .btn-group {
+        margin-top:15px;
+    }
+    .unthumbnail {
+        color:#FFF !important;
+        font-size:14px;
+        position:absolute;
+        right:0;
+        bottom:10px;
+        z-index: 2;
+    }
+</style>
+<?php
+$model = $this->model;
+?>
+<h1 class="page-title"><?php echo $this->title ?></h1>
+<div class="btb">
+    <input type="button" id="clear-cache" class="btn btn-default" value="清除缓存图片" /> 
+    <a type="button" href="<?php echo $this->url(array(), 'manage-photo-upload') ?>" id="clear-cache" class="btn btn-success">上传图片</a>
+</div>
+<div class="row">
+    <?php
+    $c = 0;
+    ?>
+    <?php foreach ($this->resource as $p): ?>
+        <div class="col-md-3 itm">
+            <input type="hidden" class="tmp" value="<?php echo $p['id'] ?>"/>
+            <div class="wp">
+                <p><?php echo $p['owner']->email . ' 上传' ?>
+                    <!--<button class="pull-right btn btn-xs btn-danger remove-photo">删除</button>-->
+                    <?php if (!$this->specialModel->getSpecialByPhoto($p["id"]) && !$this->authorModel->getAuthorByPhoto($p["id"])): // ?>
+                        <button type="button" class="btn btn-danger btn-sm remove-photo">删除</button>
+                    <?php else: ?>
+                        <label class="xs">被引用</label>
+                    <?php endif; ?>
+                </p>
+                <div class="iwp">
+                    <?php
+                    $imgUrl = $p['path']['main'];
+                    if (!$p['thumbnail']) {
+                        echo "<label class='label label-warning unthumbnail'>无缩略图</label>";
+                        $imgUrl = $p['path']['orig'];
+                    }
+                    ?>
+                    <img width="100%" src="<?php echo $imgUrl ?>"/>
+                </div>
+                <div class="btn-group">
+                    <?php if ($p['thumbnail']): ?>
+                        <a href="<?php echo $p['path']['small'] ?>" target="_blank" class="btn btn-default btn-sm">小</a>
+                        <a href="<?php echo $p['path']['main'] ?>" target="_blank" class="btn btn-default btn-sm">中</a>
+                        <a href="<?php echo $p['path']['large'] ?>" target="_blank" class="btn btn-default btn-sm">大</a>
+                    <?php endif; ?>
+                    <a href="<?php echo $p['path']['orig'] ?>" target="_blank" class="btn btn-default btn-sm">原</a>
+
+                    <a href="<?php echo $this->url(array(id => $p['id']), 'manage-photo-save') ?>" class="btn btn-info btn-sm">编辑</a>
+                </div>
+            </div>
+        </div>
+        <?php $c ++; ?>
+        <?php if ($c % 4 == 0): ?>
+            <div class="clearfix"></div>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <?php echo $this->partial('manage/partials/_paginator_bar.phtml', array('current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'manage-photo-list')); ?>
+    </div>
+</div>
+<script type="text/javascript">
+    (function($) {
+        $('#clear-cache').click(function() {
+            $.ajax({
+                url: '<?php echo $this->url(array(), 'manage-photo-clear-cache') ?>',
+                dataType: 'json',
+                type: 'POST',
+                success: function(response) {
+                    if (response) {
+                        alert('操作成功');
+                    } else {
+                        alert('操作失败');
+                    }
+                }
+            });
+        });
+
+        $('.remove-photo').click(function() {
+            removeObject($(this), '<?php echo $this->url(array(), 'manage-photo-remove') ?>');
+        });
+    })(jQuery);
+</script>

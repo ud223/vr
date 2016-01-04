@@ -1,0 +1,22 @@
+<div class="sideblock">
+        <div class="head">
+                公司投资人
+        </div>
+        <div class="body">
+                <div class="imgs">
+                        <?php
+                        foreach($this->company->company_investors as $investor) {
+                            $investorPhoto = $this->profileImage($investor->user->profile_image,'normal');
+                            ?>
+                            <a title="<?php echo $investor->user->username?>" href="<?php echo $this->url(array('id'=>$investor->user->id), 'user-home') ?>" class="img">
+                                <img src="<?php echo $investorPhoto ?>" />
+                            </a>
+                            <?php
+                        }
+                        ?>
+                    
+                        <div class="clear"></div>
+                </div>
+                
+        </div>
+</div>

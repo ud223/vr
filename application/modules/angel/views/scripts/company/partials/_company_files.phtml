@@ -1,0 +1,155 @@
+<?php
+$company = $this->company;
+?>
+
+<div id="cdocs" class="sideblock cdocs hidden page page3">
+    <p class="head">融资文档列表</p>
+    <div class="body font14px">
+
+        <!--融资需求-->
+        <p class="bold aligncenter skyblue">融资需求计划书</p>
+        <?php
+            foreach($company->funding_specification as $doc) {
+                if(!$doc->active_bln) {
+                    continue;
+                }
+                $url = $this->url(array('doctype'=>$this->type_fund_spec, 'company_id'=>$company->id, 'doc_id'=>$doc->id), 'company-doc');
+                $filename = $doc->filename;
+                ?>
+        <a class="attachfile doclink" href="<?php echo $url ?>">
+            <?php echo $filename?>
+        </a>
+
+        <?php
+            }
+        ?>
+        <div class="clear_15px"></div>
+
+        <!--营业执照-->
+        <p class="bold aligncenter skyblue">营业执照</p>
+        <?php
+            $doc = $company->business_licence;
+            $url = "";
+            $filename = "";
+            if(!empty($doc)){
+                $url = $this->url(array('doctype'=>$this->type_business_licence, 'company_id'=>$company->id, 'doc_id'=>$doc->id), 'company-doc');
+                $filename = $doc->filename;
+            }
+
+                ?>
+        <a class="attachfile doclink" href="<?php echo $url ?>">
+            <?php echo $filename?>
+        </a>
+        <div class="clear_15px"></div>
+
+        <!--公司现有股东组成情况证明-->
+        <p class="bold aligncenter skyblue">公司现有股东组成情况证明</p>
+        <?php
+            $doc = $company->funder_specification;
+            $url = "";
+            $filename = "";
+            if(!empty($doc)){
+                $url = $this->url(array('doctype'=>$this->type_funder_spec, 'company_id'=>$company->id, 'doc_id'=>$doc->id), 'company-doc');
+                $filename = $doc->filename;
+            }
+                ?>
+        <a class="attachfile doclink" href="<?php echo $url ?>">
+            <?php echo $filename?>
+        </a>
+        <div class="clear_15px"></div>
+
+        <!--股东会决议-->
+        <p class="bold aligncenter skyblue">股东会决议</p>
+        <?php
+            $doc = $company->funder_decision;
+            $url = "";
+            $filename = "";
+            if(!empty($doc)){
+                $url = $this->url(array('doctype'=>$this->type_funder_decision, 'company_id'=>$company->id, 'doc_id'=>$doc->id), 'company-doc');
+                $filename = $doc->filename;
+            }
+
+                ?>
+        <a class="attachfile doclink" href="<?php echo $url ?>">
+            <?php echo $filename?>
+        </a>
+        <div class="clear_15px"></div>
+
+        <!--公司信用报告-->
+        <p class="bold aligncenter skyblue">公司信用报告</p>
+        <?php
+            foreach($company->credit_reports as $doc) {
+                if(!$doc->active_bln) {
+                    continue;
+                }
+                $url = $this->url(array('doctype'=>$this->type_credit_report, 'company_id'=>$company->id, 'doc_id'=>$doc->id), 'company-doc');
+                $filename = $doc->filename;
+                ?>
+        <a class="attachfile doclink" href="<?php echo $url ?>">
+            <?php echo $filename?>
+        </a>
+
+        <?php
+            }
+        ?>
+        <div class="clear_15px"></div>
+
+        <!--融资人信用报告-->
+        <p class="bold aligncenter skyblue">融资人信用报告</p>
+        <?php
+            foreach($company->personal_credit_reports as $doc) {
+                if(!$doc->active_bln) {
+                    continue;
+                }
+                $url = $this->url(array('doctype'=>$this->type_personal_credit_report, 'company_id'=>$company->id, 'doc_id'=>$doc->id), 'company-doc');
+                $filename = $doc->filename;
+                ?>
+        <a class="attachfile doclink" href="<?php echo $url ?>">
+            <?php echo $filename?>
+        </a>
+
+        <?php
+            }
+        ?>
+        <div class="clear_15px"></div>
+
+        <!--财务报表-->
+        <p class="bold aligncenter skyblue">财务报表</p>
+        <?php
+            foreach($company->financial_reports as $doc) {
+                if(!$doc->active_bln) {
+                    continue;
+                }
+                $url = $this->url(array('doctype'=>$this->type_financial_report, 'company_id'=>$company->id, 'doc_id'=>$doc->id), 'company-doc');
+                $filename = $doc->filename;
+                ?>
+        <a class="attachfile doclink" href="<?php echo $url ?>">
+            <?php echo $filename?>
+        </a>
+
+        <?php
+            }
+        ?>
+        <div class="clear_15px"></div>
+
+        <!--其它支持文件-->
+        <p class="bold aligncenter skyblue">其它支持文件</p>
+        <?php
+            foreach($company->support_files as $doc) {
+                if(!$doc->active_bln) {
+                    continue;
+                }
+                $url = $this->url(array('doctype'=>$this->type_support_files, 'company_id'=>$company->id, 'doc_id'=>$doc->id), 'company-doc');
+                $filename = $doc->filename;
+                ?>
+        <a class="attachfile doclink" href="<?php echo $url ?>">
+            <?php echo $filename?>
+        </a>
+
+        <?php
+            }
+        ?>
+        <div class="clear_15px"></div>
+    </div>
+</div>
+            

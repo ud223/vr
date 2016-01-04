@@ -1,0 +1,48 @@
+<div class="container breadc">
+    <div class="row">
+        <div class="col-xs-12">
+            <a href="/">首页</a>
+            <span class="xsplt">/</span>
+            <span class="xsexp"><?php echo $this->category ?></span>
+        </div>
+    </div>
+</div>
+
+<div class="container mb30">
+    <div class="row">
+        <div class="col-xs-3">
+            <ul class="sid-ul-lst">
+                <li class="selected">
+                    <a href="/product/list/all">
+                        全部
+                    </a>
+                </li>
+                <?php foreach ($this->categorys as $category): ?>
+                    <li>
+                        <a href="/product/list/<?php echo $category->id ?>">
+                            <?php echo $category->name ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <div class="col-xs-9">
+            <div>
+                <?php foreach ($this->products as $p): ?>
+                    <div class="gallsitm">
+                        <a href="/product/info/<?php echo $p["id"] ?>" class="imga" style="background-image:url(<?php echo $p["photo"] ?>)"></a>
+                        <a href="/product/info/<?php echo $p["id"] ?>" class="nmtt"><?php echo $p["name"] ?></a>
+                    </div>
+                <?php endforeach; ?>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear-50"></div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <?php //  echo $this->partial('manage/partials/_paginator_bar.phtml', array('current_page_no' => $this->paginator->getCurrentPageNumber(), 'page_count' => $this->paginator->count(), 'route_name' => 'product-list'));  ?>
+            </div>
+        </div>
+    </div>
+</div>

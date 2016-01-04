@@ -1,0 +1,15 @@
+data/cache/*
+data/log/*
+data/tmp/*
+public/user/doc/*
+public/user/image/*
+public/comments/image/*
+public/company/logo/*
+public/company/image/*
+public/company/doc/*
+public/photo/image/*
+public/comments/image/*
+public/tmp/*
+nbproject/*
+
+

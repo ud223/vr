@@ -1,0 +1,104 @@
+<link href="/uploadify/uploadify.css" rel="stylesheet" type="text/css" />
+<style>
+    #next-step {
+        display:none;
+    }
+    #upload-limit {
+        margin-bottom:15px;
+    }
+    #upload-limit li {
+        color:#aaa;
+        font-size:smaller;
+        font-style: italic;
+    }
+</style>
+<h1 class="page-title"><?php echo $this->title ?></h1>
+<form role="form">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <input type="file" id="file_upload" name="file_upload" />
+                    <ul id="upload-limit">
+                        <li>
+                            仅接受图片类型：jpg / png / gif
+                        </li>
+                        <li>
+                            上传文件大小限制：5M
+                        </li>
+                    </ul>
+                    <input id="upload-all" class="btn btn-primary" value="上传图片" type="button"/>
+                    <input id="cancel-all" class="btn btn-default" value="取消全部" type="button"/>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" id="next-step">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p class="green">成功上传 <strong id="no-success"></strong> 个图片</p>
+                    <a id="next-lnk" href="/manage/photo/create" class="btn btn-success">确认，下一步</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script src="/uploadify/jquery.uploadify.js" type="text/javascript">
+</script>
+
+<script type="text/javascript">
+    (function($) {
+        $("#file_upload").uploadify({
+            swf: '/uploadify/uploadify.swf',
+            uploader: '/manage/photo/upload',
+            fileTypeExts: '*.jpg; *.png',
+            buttonText: '选择即将上传的图片',
+            auto: false,
+            height: 30,
+            width: 180,
+            'onUploadComplete': function(file) {
+            },
+            'onUploadSuccess': function(file, data, response) {
+                uploadifyUploadSuccess(file, data, response);
+            },
+            'onQueueComplete': function(queueData) {
+                uploadifyQueueComplete(queueData);
+            },
+            'onUploadStart': function(file) {
+
+            }
+        });
+
+        function uploadifyUploadSuccess(file, data, response) {
+            var files = $('#next-lnk').attr('files');
+            if (files) {
+                files += "|" + data;
+            } else {
+                files = data;
+            }
+            $('#next-lnk').attr('files', files);
+        }
+        function uploadifyQueueComplete(queueData) {
+            $('#no-success').html(queueData.uploadsSuccessful);
+            $('#next-step').show();
+        }
+
+        $('#upload-all').click(function() {
+            $('#file_upload').uploadify('upload', '*');
+        });
+
+        $('#cancel-all').click(function() {
+            $('#file_upload').uploadify('cancel', '*');
+            $('#next-step').hide();
+            $('#next-lnk').attr('files', '');
+        });
+        $('#next-lnk').click(function() {
+            var url = $(this).attr('href') + "?fs=" + $(this).attr('files');
+            $(this).attr('href', url);
+        });
+
+    })(jQuery);
+</script>

@@ -1,0 +1,11 @@
+<?php
+    $user = $this->user;
+    if(!$user->wait_tobe_validate && !$user->validated_bln) {
+    ?>
+<div class="shadowbox45degree radiusall_4px toptip">
+    <span class="red bold">你还未提交实名认证，</span><span>这会导致你无法浏览到天使圈部分精彩内容并影响到你的投资/融资活动</span>
+    <a href="/personalinfo" class="btn btn_white gbtn">开始实名认证</a>
+</div>
+    <?php
+    }
+    ?>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>上传公司图片</title>
+</head>
+
+<body>
+    
+    
+    <form method="post" action="<?php echo $this->url(array('company_id'=>$this->company_id), 'upload-company-image')?>" enctype="multipart/form-data">
+        <input type="file" name="company-image" accept="image/*"/>
+        <input type="hidden" name="status" value="<?php echo $this->result; ?>"/>
+        <?php
+        
+            if(isset($this->path)){
+        ?>
+                <input type="hidden" name="doc_id" value="<?php echo $this->doc_id; ?>"/>
+                <input type="hidden" name="path" value="<?php echo $this->path; ?>"/>
+                <input type="hidden" name="orig" value="<?php echo $this->orig; ?>"/>
+        <?php
+            }
+        ?>
+    </form>
+</body>
+</html>

@@ -1,0 +1,207 @@
+
+<style>
+</style>
+<h1 class="page-title"><?php echo $this->title ?></h1>
+<div class="row">
+    <div class="col-md-8">
+        <form role="form" method="post">
+            <div class="form-group">
+                <label>首页图片：</label>
+                <div class='panel panel-info'>
+                    <div id="gy-photo" class='panel-body gy-photo'>
+                    </div>
+                </div>
+                <input type="hidden" name="photo" id="photo"/>
+            </div>
+            <div class="form-group">
+                <label>标题：</label>
+                <input type="text" class="form-control" id="title" name="title" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>首页描述：</label>
+                <input type="text" class="form-control" id="simple_content" name="simple_content" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>简介内容：</label>
+                <input type="hidden" id="content" name="content">
+                <script type="text/plain" id="editor_content" name="editor_content" style="width:1000px;height:240px;">
+                    <p>请输入简介内容</p>
+                </script>
+            </div>
+            <div class="clear-20"></div>
+            <!--英文部分-->
+            <div class="form-group">
+                <label>标题(英文)：</label>
+                <input type="text" class="form-control" id="title_en" name="title_en" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>首页描述(英文)：</label>
+                <input type="text" class="form-control" id="simple_content_en" name="simple_content_en" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>简介内容(英文)：</label>
+                <input type="hidden" id="content_en" name="content_en">
+                <script type="text/plain" id="editor_content_en" name="editor_content_en" style="width:1000px;height:240px;">
+                    <p>请输入简介内容(英文)</p>
+                </script>
+            </div>
+            <button type="button" id="save-btn" class="btn btn-default">确认提交</button>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    (function($) {
+        $('.gy-photo').photoSelector();
+
+        $('#save-btn').click(function() {
+            var save = $('#gy-photo').attr('save');
+            if (!save || save === '{}') {
+                $('#photo').val('');
+            } else {
+                $('#photo').val(save);
+            }
+        });
+
+        $('#save-btn').click(function() {
+            var save = $('#gy-photo').attr('save');
+            if (!save || save === '{}') {
+                $('#photo').val('');
+            } else {
+                $('#photo').val(save);
+            }
+        });
+
+        $('input[name="programs[]"]').change(function(){
+            $(this).closest('.label').toggleClass('label-success');
+        });
+    })(jQuery);
+
+    function left(id) {
+        var own_programs = $('#gy-program').children();
+
+        if ($(own_programs[0]).attr('id') == id) {
+            return;
+        }
+
+        var cur_program = $('#'+ id);
+        var lf_program = $(cur_program).prev('div');
+
+        $(lf_program).remove();
+
+        $(cur_program).after(lf_program);
+
+        sortValue();
+    }
+
+    function right(id) {
+        var own_programs = $('#gy-program').children();
+
+        if ($(own_programs[own_programs.length - 1]).attr('id') == id) {
+            return;
+        }
+
+        var cur_program = $('#'+ id);
+        var rt_program = $(cur_program).next('div');
+
+        $(rt_program).remove();
+
+        $(cur_program).before(rt_program);
+
+        sortValue();
+    }
+
+    function del(id) {
+        var del_program = $('#'+ id);
+
+        $(del_program).remove();
+
+        var buttons = $(del_program).children('button');
+
+        for (var i = 0; i < buttons.length; i++) {
+            if ($(buttons[i]).html() != "O") {
+                $(buttons[i]).hide();
+            }
+            else {
+                $(buttons[i]).show();
+            }
+        }
+
+        $(del_program).on("click", addProgram($(del_program).attr('id')));
+
+        $('#not-program').append(del_program);
+
+        sortValue();
+    }
+
+    function sortValue() {
+        $('#programs').val("");
+
+        var own_programs = $('#gy-program').children();
+
+        for (var i = 0; i < own_programs.length;i++) {
+            if ($('#programs').val() != "") {
+                var val = $('#programs').val();
+
+                $('#programs').val(val + ',');
+            }
+
+            var val = $('#programs').val();
+
+            $('#programs').val(val + $(own_programs[i]).attr('id'));
+        }
+    }
+
+    function addProgram(id) {
+        var add_programs = $('#'+ id);
+
+        var par_ele = $(add_programs).parent();
+
+        if ($(par_ele).attr('id') == 'gy-program') {
+            return;
+        }
+
+        var buttons = $(add_programs).children('button');
+
+        for (var i = 0; i < buttons.length; i++) {
+            if ($(buttons[i]).html() == "O") {
+                $(buttons[i]).hide();
+            }
+            else {
+                $(buttons[i]).show();
+            }
+        }
+
+        $('#gy-program').append(add_programs);
+
+        sortValue();
+    }
+
+    $("#save-btn").click(function() {
+        var html_description = UM.getEditor('editor_content').getContent()
+        $("#content").val(html_description);
+
+        var html_description_en = UM.getEditor('editor_content_en').getContent()
+        $("#content_en").val(html_description_en);
+
+        $("form").submit();
+    });
+
+    //实例化编辑器
+    var um = UM.getEditor('editor_content');
+
+    um.addListener('blur',function(){
+        $('#focush2').html('编辑器失去焦点了')
+    });
+    um.addListener('focus',function(){
+        $('#focush2').html('')
+    });
+
+    var um1 = UM.getEditor('editor_content_en');
+
+    um1.addListener('blur',function(){
+        $('#focush2').html('编辑器失去焦点了')
+    });
+    um1.addListener('focus',function(){
+        $('#focush2').html('')
+    });
+</script>

@@ -1,0 +1,176 @@
+<style>
+    #next-step {
+        display:none;
+    }
+
+    .itm {
+    }
+    .wp {
+        background:#F0F0F0;
+        height: 350px;
+        margin-bottom:30px;
+        padding:15px;
+    }
+    .wp p {
+        font-size:12px;
+    }
+    .iwp {
+        height:135px;
+        overflow:hidden;
+        position:relative;
+        width:100%;
+    }
+    .iwp img {
+        left:0;
+        position:absolute;
+        top:0;
+    }
+    .wp label {
+        color:#aaa;
+    }
+    .op {
+        opacity: 0.5;
+    }
+    .itm[status='sending'] .wp {
+        background:#8dd88b;
+    }
+    .itm[status='sent'] .wp {
+        opacity:0.5;
+    }
+    .itm[status='failed'] .wp {
+        background:#8c0000;
+        opacity:0.5;
+    }
+    .bwp * {
+        width:135px;
+    }
+    .bwp input, .bwp select {
+        margin:5px 0 0 0;
+    }
+    .bwp select {
+        margin-bottom:5px;
+    }
+    .thumbnail {
+        display:inline-block;
+        float:left;
+        margin-right:5px !important;
+        width:auto;
+    }
+    .thumbnail-container label {
+        width:auto;
+    }
+</style>
+<h1 class="page-title"><?php echo $this->title ?></h1>
+<form role="form">
+    <div class="btb">
+        <input type="button" id="generate" class="btn btn-success" value="生成缩略图" />
+    </div>
+    <div class="row">
+        <?php foreach ($this->fileList as $k => $v): ?>
+            <div class="col-md-2 itm">
+                <input type="hidden" class="tmp" value="<?php echo $v['v'] ?>"/>
+                <div class="wp">
+                    <p>
+                        <?php echo $v['v'] ?>
+                    </p>
+                    <div class="iwp">
+                        <img width="100%" src="/tmp/<?php echo $v['v'] ?>"/>
+                    </div>
+                    <div class="bwp">
+                        <input class="title" type="text" placeholder="请输入图片标题"/>
+                        <input class="description" type="text" placeholder="请输入图片描述"/>
+                        <select class="phototype">
+                            <option value="">未选中</option>
+                            <?php foreach ($this->phototype as $key => $val): ?>
+                                <option value="<?php echo $val->id ?>"><?php echo $val->name ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <div class="thumbnail-container">
+                            <input type="checkbox" class="thumbnail" id="thumbnail<?php echo $v['v'] ?>" name="thumbnail" checked="checked"/> <label for="thumbnail<?php echo $v['v'] ?>">生成缩略图</label>
+                            <div class="clear"></div>
+                        </div>
+                        <button class="copy-btn" type="button">复制到全部</button>
+                    </div>
+                    <label class="resultlb"></label>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <div id='prot'></div>
+
+</form>
+
+<script type="text/javascript">
+    var intervalId = false;
+    (function($) {
+
+        var generate = function() {
+            $('#prot').html(new Date());
+            var $itm = $('.itm');
+            var sending = $('.itm[status="sending"]').length;
+            var done = $('.itm[status="sent"], .itm[status="failed"]').length;
+            if (done === $itm.length) {
+                clearInterval(intervalId);
+                $('#generate').after('操作完毕，<a href="/manage/photo/list">立即查看</a>');
+                $('#generate').remove();
+            }
+            if (sending === 0) {
+                $itm = $('.itm');
+                $.each($itm, function() {
+                    var $this = $(this);
+                    if (!$this.attr('status')) {
+
+                        generateItem($this);
+                        return false;
+                    }
+                });
+            }
+        };
+
+        var generateItem = function(obj) {
+            obj.attr('status', 'sending');
+            var lb = obj.find('.resultlb');
+            lb.html('正在处理 ...');
+            var tmp = obj.find('.tmp').val();
+            var title = obj.find('.title').val();
+            var description = obj.find('.description').val();
+            var phototype = obj.find('.phototype').val();
+            var thumbnail = obj.find('.thumbnail').prop('checked') ? 1 : 0;
+            var data = {tmp: tmp, title: title, description: description, phototype: phototype, thumbnail: thumbnail};
+            $.ajax({
+                url: '<?php echo $this->url(array(), 'manage-photo-create') ?>',
+                dataType: 'json',
+                type: 'POST',
+                data: data,
+                success: function(response) {
+                    if (response === 1) {
+                        obj.attr('status', 'sent');
+                        lb.html('操作成功 ...').addClass('green');
+
+                    } else {
+                        obj.attr('status', 'failed');
+                        lb.html('操作失败 ...').addClass('white');
+                    }
+                }
+            });
+        };
+
+        $('#generate').click(function() {
+            intervalId = setInterval(generate, 500);
+            $(this).prop('disabled', true);
+        });
+
+        $('.copy-btn').click(function() {
+            var $this = $(this);
+            var container = $this.closest('.itm');
+            var title = container.find('.title').val();
+            var phototype = container.find('.phototype').val();
+            var description = container.find('.description').val();
+            var thumbnail = container.find('.thumbnail').prop('checked');
+            $('.title').val(title);
+            $('.description').val(description);
+            $('.phototype').val(phototype);
+            $('.thumbnail').prop('checked', thumbnail);
+        });
+    })(jQuery);
+</script>

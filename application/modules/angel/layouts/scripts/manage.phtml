@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <title>普源后台管理系统</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="renderer" content="webkit">
+        <!-- Bootstrap -->
+
+        <link rel="stylesheet" href="<?php echo $this->cssPath("bootstrap.css"); ?>">
+        <link rel="stylesheet" href="<?php echo $this->cssPath("bootstrap.theme.css"); ?>">
+        <link href="<?php echo $this->cssPath("global.css"); ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $this->cssPath("global.manage.css"); ?>" rel="stylesheet" type="text/css" />
+
+<!--        <script type="text/javascript" src="--><?php //echo $this->jsPath('jquery.1.10.2.min.js'); ?><!--"></script>-->
+        <script type="text/javascript" src="/umeditor/third-party/jquery.min.js"></script>
+        <link  type="text/css" rel="stylesheet" href="/umeditor/themes/default/css/umeditor.css">
+        <script type="text/javascript" charset="utf-8" src="/umeditor/umeditor.config.js"></script>
+        <script type="text/javascript" charset="utf-8" src="/umeditor/umeditor.min.js"></script>
+        <script type="text/javascript" src="/umeditor/lang/zh-cn/zh-cn.js"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('bootstrap.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('plugin.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('global.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('share.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->jsPath('qrcode.js'); ?>"></script>
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+            <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <!-- Static navbar -->
+        <div class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/manage">普源后台管理系统</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">产品<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-product-list-home') ?>">产品列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-product-create') ?>">添加产品</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">案例<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-case-list-home') ?>">产品案例</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-case-create') ?>">添加案例</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">新闻<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-news-list-home') ?>">新闻列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-news-create') ?>">添加新闻</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">公司简介 <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-profile-list-home') ?>">公司简介列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-profile-create') ?>">添加公司简介</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">关于我们 <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-about-list-home') ?>">关于我们列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-about-create') ?>">添加关于我们</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">联系我们 <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-contact-create') ?>">编辑联系我们</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">首页幻灯片<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-show-image-list-home') ?>">首页幻灯片列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-show-image-create') ?>">添加幻灯片</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">图片 <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-photo-list-home') ?>">图片列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-photo-upload') ?>">添加图片</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-phototype-list-home') ?>">管理图片分类</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">分类 <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo $this->url(array(), 'manage-category-list-home') ?>">分类列表</a></li>
+                                <li><a href="<?php echo $this->url(array(), 'manage-category-create') ?>">添加分类</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <?php if (isset($this->me)): ?>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="<?php echo $this->url(array(), 'manage-logout') ?>" title="<?php echo $this->me->getUser()->email ?>">你好 管理员, 安全退出 <i class="glyphicon glyphicon-off"></i></a></li>
+                        </ul>
+                    <?php else: ?>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="<?php echo $this->url(array(), 'manage-login') ?>">登录</a></li>
+                        </ul>
+
+                    <?php endif; ?>
+
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+
+
+        <div class="container">
+            <?php echo $this->layout()->content; ?>
+        </div> <!-- /container -->
+        <div class='marginbottom50px'>
+
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+            });
+        </script>
+    </body>
+</html>

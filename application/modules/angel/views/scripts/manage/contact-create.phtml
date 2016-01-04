@@ -1,0 +1,95 @@
+<style>
+</style>
+<h1 class="page-title"><?php echo $this->title ?></h1>
+<div class="row">
+    <div class="col-md-8">
+        <form role="form" method="post">
+
+            <h3>公用信息</h3>
+            <div class="form-group">
+                <label>联系电话：</label>
+                <input type="text" class="form-control" id="sale_tel" name="sale_tel" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>传真：</label>
+                <input type="text" class="form-control" id="fax" name="fax" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>电子邮箱：</label>
+                <input type="text" class="form-control" id="email" name="email" data-toggle="popover" value="">
+            </div>
+
+
+            <hr/>
+            <h3>中英文区分信息</h3>
+
+
+            <div class="form-group">
+                <label>公司名称：</label>
+                <input type="text" class="form-control" id="name" name="name" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>公司名称(英文)：</label>
+                <input type="text" class="form-control" id="name_en" name="name_en" data-toggle="popover" value="">
+            </div>
+            <div class="clear-20"></div>
+            <div class="form-group">
+                <label>公司地址：</label>
+                <input type="text" class="form-control" id="company_address" name="company_address" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>公司地址(英文)：</label>
+                <input type="text" class="form-control" id="company_address_en" name="company_address_en" data-toggle="popover" value="">
+            </div>
+            <div class="clear-20"></div>
+            <div class="form-group">
+                <label>惠州工厂地址：</label>
+                <input type="text" class="form-control" id="factory_address_1" name="factory_address_1" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>惠州工厂地址(英文)：</label>
+                <input type="text" class="form-control" id="factory_address_1_en" name="factory_address_1_en" data-toggle="popover" value="">
+            </div>
+            <div class="clear-20"></div>
+            <div class="form-group">
+                <label>广州工厂地址：</label>
+                <input type="hidden" id="content" name="content">
+                <input type="text" class="form-control" id="factory_address_2" name="factory_address_2" data-toggle="popover" value="">
+            </div>
+            <div class="form-group">
+                <label>广州工厂地址(英文)：</label>
+                <input type="text" class="form-control" id="factory_address_2_en" name="factory_address_2_en" data-toggle="popover" value="">
+            </div>
+            <!--英文部分-->
+            <div class="clear-20"></div>
+            <button type="submit" id="save-btn" class="btn btn-default">确认提交</button>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    (function($) {
+        $('.gy-photo').photoSelector();
+
+        $('#save-btn').click(function() {
+            var save = $('#gy-photo').attr('save');
+            if (!save || save === '{}') {
+                $('#photo').val('');
+            } else {
+                $('#photo').val(save);
+            }
+        });
+
+        $('#save-btn').click(function() {
+            var save = $('#gy-photo').attr('save');
+            if (!save || save === '{}') {
+                $('#photo').val('');
+            } else {
+                $('#photo').val(save);
+            }
+        });
+
+        $('input[name="programs[]"]').change(function(){
+            $(this).closest('.label').toggleClass('label-success');
+        });
+    })(jQuery);
+</script>

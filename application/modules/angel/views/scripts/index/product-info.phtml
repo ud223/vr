@@ -1,0 +1,386 @@
+<!--<style>-->
+<!--    #bigc2-img-wp {-->
+<!--        display:block;-->
+<!--    }-->
+<!--    #bigc2-img-wp img {-->
+<!--        width:100%;-->
+<!--    }-->
+<!---->
+<!--    #smal2-img-list {-->
+<!--        padding-top:10px;-->
+<!--    }-->
+<!--    #smal2-img-list .itm {-->
+<!--        display:inline-block;-->
+<!--        float:left;-->
+<!--        margin-right:10px;-->
+<!--        background-position: center center;-->
+<!--        background-repeat: no-repeat;-->
+<!--        background-size: cover;-->
+<!--        width:96px;-->
+<!--        height:72px;-->
+<!--        box-sizing: border-box;-->
+<!--        opacity:.5;-->
+<!--    }-->
+<!---->
+<!--    #smal2-img-list .itm.last {-->
+<!--        margin-right:0;-->
+<!--    }-->
+<!--    #smal2-img-list .itm.selected {-->
+<!--        border:4px solid #478bd2;-->
+<!--        opacity: 1;-->
+<!--    }-->
+<!--    #smal2-img-list .itm:hover {-->
+<!--        opacity:1;-->
+<!--    }-->
+<!--    #crni-tt {-->
+<!--        font-size: 34px;-->
+<!--        margin-bottom:20px;-->
+<!--        display:block;-->
+<!--    }-->
+<!--    .caro-tt {-->
+<!--        color:#999;-->
+<!--        margin-bottom:10px;-->
+<!--        font-size:14px;-->
+<!--    }-->
+<!--    .data-ul {-->
+<!--        margin:0;-->
+<!--        padding:0;-->
+<!--        list-style: none;-->
+<!--    }-->
+<!--    .data-ul li {-->
+<!--        dispaly:block;-->
+<!--        padding:8px 20px;-->
+<!--        font-size: 16px;-->
+<!--    }-->
+<!--    .data-ul li:nth-child(odd) {-->
+<!--        background:#F0F0F0;-->
+<!--    }-->
+<!--    .data-ul li .col {-->
+<!--        color:#aaa;-->
+<!--        display:inline-block;-->
+<!--        width:160px;-->
+<!--    }-->
+<!--    .caro-detail {-->
+<!--        font-size:16px;-->
+<!--        line-height:30px;-->
+<!--    }-->
+<!--    .caro-detail .gltw-img {-->
+<!--        margin-bottom:20px;-->
+<!--    }-->
+<!---->
+<!--    .rela-cas, .prod-rela-cas {-->
+<!--        display:block;-->
+<!--        height:150px;-->
+<!--        width:250px;-->
+<!--        background-position: center center;-->
+<!--        background-repeat: no-repeat;-->
+<!--        background-size: cover;-->
+<!--        margin-right:20px;-->
+<!--        float:left;-->
+<!--        margin-bottom:50px;-->
+<!--        position: relative;-->
+<!--    }-->
+<!--    .prod-rela-cas {-->
+<!--        margin-right:17.5px;-->
+<!--        width:200px;-->
+<!--    }-->
+<!--    .rela-cas.even {-->
+<!--        margin-right:0;-->
+<!--    }-->
+<!--    .prod-rela-cas.last {-->
+<!--        margin-right: 0;-->
+<!--    }-->
+<!--    .rela-cas span, .prod-rela-cas span {-->
+<!--        display:block;-->
+<!--        width:100%;-->
+<!--        height:24px;-->
+<!--        line-height:24px;-->
+<!--        bottom:-32px;-->
+<!--        position:absolute;-->
+<!--        left:0;-->
+<!--        text-align: center;-->
+<!--        font-size: 16px;-->
+<!--        color:#333;-->
+<!--        overflow: hidden;-->
+<!--    }-->
+<!--</style>-->
+<div class="container breadc">
+    <div class="cn" style="display: none">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/">首页</a>
+                <span class="xsplt">/</span>
+                <a href="/product/list/<?php echo $this->category_id ?>"><?php echo $this->category ?></a>
+                <span class="xsplt">/</span>
+                <span class="xsexp"><?php echo $this->model->name ?></span>
+            </div>
+        </div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="/?language=en">Home</a>
+                <span class="xsplt">/</span>
+                <a href="/product/list/<?php echo $this->category_id ?>?language=en"><?php echo $this->category_en ?></a>
+                <span class="xsplt">/</span>
+                <span class="xsexp"><?php echo $this->model->name_en ?></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="cn" style="display: none">
+        <div class="row">
+            <div class="col-xs-6">
+                <a href="#" id="bigc2-img-wp">
+                    <img class="big-photo" style="width:500px; height: 302px" src="<?php echo $this->first_photo?>" />
+                </a>
+                <div id="smal2-img-list">
+                    <?php $c = 0;?>
+                    <?php foreach ($this->photo as $p):?>
+                        <?php if ($c == 4):?>
+                            <a href="javascript:void(0)" style="background-image:url(<?php echo $p ?>);" class="itm small-photo last"></a>
+                            <?php break;?>
+                        <?php else:?>
+                            <?php if ($c == 0):?>
+                                <a href="javascript:void(0)" style="background-image:url(<?php echo $p ?>);" class="itm small-photo selected"></a>
+                            <?php else: ?>
+                                <a href="javascript:void(0)" style="background-image:url(<?php echo $p ?>);" class="itm small-photo"></a>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <?php $c++;?>
+                    <?php endforeach;?>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <span id="crni-tt"><?php echo $this->model->name ?></span>
+                <div>
+                    <p class="caro-tt">数据说明</p>
+                    <ul class="data-ul">
+                        <?php if ($this->model->width): ?>
+                            <li>
+                                <span class="col">宽度：</span>
+                                <span><?php echo $this->model->width ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->thickness): ?>
+                            <li>
+                                <span class="col">厚度：</span>
+                                <span><?php echo $this->model->thickness ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->height): ?>
+                            <li>
+                                <span class="col">长度：</span>
+                                <span><?php echo $this->model->height ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->style): ?>
+                            <li>
+                                <span class="col">款式：</span>
+                                <span><?php echo $this->model->style ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->other_thickness): ?>
+                            <li>
+                                <span class="col">上/下钢板厚度：</span>
+                                <span><?php echo $this->model->other_thickness ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->steel_core): ?>
+                            <li>
+                                <span class="col">可用芯材：</span>
+                                <span><?php echo $this->model->steel_core ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->steel_belt): ?>
+                            <li>
+                                <span class="col">侧边封钢带：</span>
+                                <span><?php echo $this->model->steel_belt ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->structure): ?>
+                            <li>
+                                <span class="col">安装结构：</span>
+                                <span><?php echo $this->model->structure ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="clear-50"></div>
+
+            <div class="col-xs-6">
+                <p class="caro-tt">详产品特点</p>
+                <div class="caro-detail">
+                    <p>
+                        <?php echo $this->model->description ?>
+                    </p>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <?php if (count($this->cases) > 0):?>
+                    <p class="caro-tt">相关案例</p>
+                    <div>
+                        <?php $n = 1; ?>
+                        <?php foreach ($this->cases as $c):?>
+                            <?php if ($n % 2 == 0) :?>
+                                <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas even" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name"]?></span></a>
+                            <?php else:?>
+                                <a href="/case/info/<?php echo $c["id"]?>" class="rela-cas" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name"]?></span></a>
+                            <?php endif;?>
+                            <?php $n++; ?>
+                        <?php endforeach;?>
+                    </div>
+                    <div class="clear"></div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <div class="en" style="display: none">
+        <div class="row">
+            <div class="col-xs-6">
+                <a href="javascript:void(0)" id="bigc2-img-wp">
+                    <img class="big-photo" style="width:500px; height: 302px" src="<?php echo $this->first_photo?>" />
+                </a>
+                <div id="smal2-img-list">
+                    <?php $c = 0;?>
+                    <?php foreach ($this->photo as $p):?>
+                        <?php if ($c == 4):?>
+                            <a href="javascript:void(0)" style="background-image:url(<?php echo $p ?>);" class="itm small-photo last"></a>
+                            <?php break;?>
+                        <?php else:?>
+                            <?php if ($c == 0):?>
+                                <a href="javascript:void(0)" style="background-image:url(<?php echo $p ?>);" class="itm small-photo selected"></a>
+                            <?php else: ?>
+                                <a href="javascript:void(0)" style="background-image:url(<?php echo $p ?>);" class="itm small-photo"></a>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <?php $c++;?>
+                    <?php endforeach;?>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <span id="crni-tt"><?php echo $this->model->name_en ?></span>
+                <div>
+                    <p class="caro-tt">DATA</p>
+                    <ul class="data-ul">
+                        <?php if ($this->model->width_en): ?>
+                            <li>
+                                <span class="col">Width：</span>
+                                <span><?php echo $this->model->width_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->thickness_en): ?>
+                            <li>
+                                <span class="col">Standard width：</span>
+                                <span><?php echo $this->model->thickness_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->height_en): ?>
+                            <li>
+                                <span class="col">Length：</span>
+                                <span><?php echo $this->model->height_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->style_en): ?>
+                            <li>
+                                <span class="col">Style：</span>
+                                <span><?php echo $this->model->style_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->other_thickness_en): ?>
+                            <li>
+                                <span class="col">External/internal Facing Thickness：</span>
+                                <span><?php echo $this->model->other_thickness_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->steel_core_en): ?>
+                            <li>
+                                <span class="col">Available core materials：</span>
+                                <span><?php echo $this->model->steel_core_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->steel_belt_en): ?>
+                            <li>
+                                <span class="col">Lateral Sides：</span>
+                                <span><?php echo $this->model->steel_belt_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->model->structure_en): ?>
+                            <li>
+                                <span class="col">Structural joint：</span>
+                                <span><?php echo $this->model->structure_en ?></span>
+                                <div class="clear"></div>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="clear-50"></div>
+
+            <div class="col-xs-6">
+                <p class="caro-tt">Features</p>
+                <div class="caro-detail">
+                    <p>
+                        <?php echo $this->model->description_en ?>
+                    </p>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <?php if (count($this->cases) > 0):?>
+                    <p class="caro-tt">Related Case</p>
+                    <div>
+                        <?php $n = 1; ?>
+                        <?php foreach ($this->cases as $c):?>
+                            <?php if ($n % 2 == 0) :?>
+                                <a href="/case/info/<?php echo $c["id"]?>?language=en" class="rela-cas even" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
+                            <?php else:?>
+                                <a href="/case/info/<?php echo $c["id"]?>?language=en" class="rela-cas" style="background-image: url(<?php echo $c["photo"]?>);"><span><?php echo $c["name_en"]?></span></a>
+                            <?php endif;?>
+                            <?php $n++; ?>
+                        <?php endforeach;?>
+                    </div>
+                    <div class="clear"></div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".small-photo").click(function() {
+            var path = $(this).css("background-image");
+
+            $(".col-xs-6").find(".selected").removeClass("selected");
+            $(this).addClass("selected");
+            $(".big-photo").attr("src", photoSmallToBig(path));
+        })
+
+        $(".header").find(".selected").removeClass("selected");
+        $(".header").find(".product").addClass("selected");
+    })
+
+    function photoSmallToBig(path) {
+        return  path = path.replace("url(", "").replace(")", "").replace("_160", "").replace('\"', '').replace('\"', '').replace('\'', '').replace('\'', '');
+    }
+</script>

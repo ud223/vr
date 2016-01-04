@@ -1,0 +1,315 @@
+<style>
+    .toptip {
+        width:568px;
+        padding:0;
+    }
+    .bdetail ul {
+        display: block;
+    }
+    .bdetail ul li {
+        display:inline-block;
+        float:left;
+        margin-right:10px;
+    }
+    .clabel {
+        margin-bottom:2px;
+    }
+    .toptip .gbtn {
+        margin:0 5px 0 0;
+    }
+    .bdetail {
+        background:#FFF;
+        border-bottom:1px solid #EAD06A;
+        border-top:1px solid #EAD06A;
+        padding:20px;
+    }
+    .blk {
+        border-bottom:1px solid #EAD06A;
+        padding:20px;
+    }
+    .blk textarea {
+        width:400px;
+    }
+    #refusereason {
+        display:none;
+    }
+
+</style>
+
+<?php
+$company = $this->company;
+$funding_mini_unit_rmb = $company->funding_mini_unit * 1000;
+$lock = true;
+?>
+<?php
+if(!isset($this->me)) {
+?>
+<div class="container_24">
+    <div class="grid_24">
+        <div class="warningblk" style="margin:150px 0;">
+            <p>在你处理这个请求之前，请先</p>
+            <div class="clear_5px"></div>
+            <p>
+                <a href="<?php echo $this->url(array(), 'login')?>?goto=<?php echo $this->url(array('token'=>$this->token), 'guarantor-candidate') ?>" class="btn btn_white gbtn gbtnnoicon">登录</a>
+                <span class="gray">或</span>
+                <a href="<?php echo $this->url(array(), 'register')?>?guarantor_register=1&token=<?php echo $this->token?>" class="btn btn_white gbtn gbtnnoicon">注册</a>
+            </p>
+        </div>
+    </div>
+</div>
+<?php
+} else {
+?>
+
+<?php
+    if(!$this->candidate){
+        ?>
+        <div class="container_24">
+            <div class="grid_24">
+                <div style='padding:250px 100px;text-align:center;'>
+                    <p class='gray'>'<?php echo $this->company->owner->username ?>' 已经取消了对你的担保人邀请。</p>
+                    <div class='clear_10px'></div>
+                    <a href='/' class='btn btn_white gbtn'>继续浏览</a>
+                </div>
+                
+                
+            </div>
+            
+        </div>
+        <?php
+    }
+    else{
+        $owner = $this->company->owner;
+?>
+
+
+<?php 
+if($this->me->getUser()->validated_bln){
+    // 登录用户并通过实名认证用户
+?>
+<div class="container_24">
+    <div class="clear_30px"></div>
+    <div class="toptip leftmargin5px rightmargin5px commonshadow radiusall_2px">
+    <?php if(!$this->candidate->accepted_bln && !$this->candidate->refused_bln) {
+        $lock = false;
+        ?>
+    
+        <div class="paddingbox20px">
+            <p><strong><?php echo $this->candidate->name ?></strong>， 你好:</p><p><?php echo $owner->username ?>邀请你作为他/她公司融资程序的<a href="#">担保人</a>。邀请人指明你和他/她的关系为：<?php echo $this->candidate->relationship ?></p>
+        </div>
+        
+        <?php echo $this->partial('company/partials/_startup_guarantor_intro.phtml', array('company'=>$company, 'owner'=>$company->owner)); ?>
+        
+        <div class="blk">
+            <input type="button" id="acceptbtn" class="btn btn_green gbtn gbtnnoicon" value="确认担保"/>
+            <input type="button" id="refusebtn" class="btn btn_black gbtn gbtnnoicon" value="拒绝担保" alt="取消拒绝"/>
+        </div>
+        
+        <div class="blk" id="refusereason">
+            <p>请填写你拒绝的原因，然后点击“确认拒绝担保”按钮</p>
+            <div class="clear_10px"></div>
+            <textarea id="refusereasontxt" class="text"></textarea>
+            <div class="clear_10px"></div>
+            <input type="button" id="submitrefusebtn" class="btn btn_red gbtn gbtnnoicon" value="确认拒绝担保"/>
+        </div>
+    
+    <?php
+    } 
+    if($this->candidate->refused_bln) {
+    ?>
+        <div class="paddingbox20px">
+            <p><strong><?php echo $this->candidate->name ?></strong>， 你好:</p><p><?php echo $owner->username ?>邀请你作为他/她公司融资程序的<a href="#">担保人</a>。邀请人指明你和他/她的关系为：<?php echo $this->candidate->relationship ?></p>
+        </div>
+        
+        <?php echo $this->partial('company/partials/_startup_guarantor_intro.phtml', array('company'=>$company, 'owner'=>$company->owner)); ?>
+        
+        <div class="blk">
+            你已经拒绝作为该公司担保人，原因如下：
+        </div>
+        
+        <div class="blk">
+            <?php echo $this->candidate->refused_reason ?>
+        </div>
+    <?php
+    }
+    if($this->candidate->accepted_bln) {
+    ?>
+        <div class="paddingbox20px">
+            <p><strong><?php echo $this->candidate->name ?></strong>， 你好:</p><p><?php echo $owner->username ?>邀请你作为他/她公司融资程序的<a href="#">担保人</a>。邀请人指明你和他/她的关系为：<?php echo $this->candidate->relationship ?></p>
+        </div>
+        
+        <?php echo $this->partial('company/partials/_startup_guarantor_intro.phtml', array('company'=>$company, 'owner'=>$company->owner)); ?>
+        
+        <div class="blk">
+            你已经同意作为该公司担保人，感谢你的配合
+        </div>
+        
+    <?php
+    }
+    ?>
+    </div>
+</div>
+<?php
+    } else if(!$this->me->getUser()->email_validated_bln) {
+        // 登录用户，邮箱未激活
+?>
+<div class="container_24">
+    <div class="grid_24">
+        <div class="warningblk shadowbox">
+            <p>在你处理这个请求之前，请先前往你的邮箱激活“天使圈帐号”</p>
+            <div class="clear_10px"></div>
+            <p>
+                <a href="#" target="_blank" class="btn btn_white gbtn gbtnnoicon">前往邮箱</a>
+            </p>
+        </div>
+    </div>
+</div>
+    <?php
+    
+    } else if (!$this->me->getUser()->validated_bln) {
+        // 未通过实名认证
+    ?>
+<div class="container_24">
+    <div class="grid_24">
+        <div class="warningblk shadowbox">
+            <p>在你处理这个请求之前，请先提交并通过实名认证审核</p>
+            <div class="clear_10px"></div>
+            <p>
+                <a href="<?php echo $this->url(array(), 'personal-info') ?>" target="_blank" class="btn btn_white gbtn gbtnnoicon">查看“我的实名认证"</a>
+            </p>
+            <div class="clear_10px"></div>
+            <p class="gray textshadow">若你已经提供了实名认证但还在审批过程中，请耐心等待，一旦实名认证通过，你即可“同意”或“拒绝”成为该公司担保人<br/>谢谢你的耐心等待</p>
+        </div>
+    </div>
+</div>
+    <?php
+    }
+        ?>
+
+<div class="titleblock fullwrapper">
+    <div class="container_24" id="companytitle">
+            <div class="grid_14 lt">
+                    <h1> 
+                            <?php echo $company->name ?>
+                    </h1>
+                    <h2>
+                            <?php echo $company->brief_descr ?>
+                    </h2>
+            </div>
+    </div>
+</div>
+
+<div class="container_24 main">
+    
+    
+    <div class="grid_24 tab">
+            <a href="javascript:void(0)" for="page1" class="tabitem selected radiusall_2px">公司基本信息</a>
+            <a href="javascript:void(0)" for="page2" class="tabitem radiusall_2px">创业者自述</a>
+            <a href="javascript:void(0)" for="page3" class="tabitem radiusall_2px">融资文档</a>
+            <div class="clear_5px"></div>
+    </div>
+    <div class="grid_15 ltside">
+            
+            <?php echo $this->partial('company/partials/_company_descr.phtml', array('company'=>$company, 'logoUrl'=>$this->logoUrl)); ?>
+        
+            <?php echo $this->partial('company/partials/_company_startup.phtml', array('company'=>$company)); ?>
+            
+            <?php echo $this->partial('company/partials/_company_files.phtml', array('company'=>$company, 'type_fund_spec'=>$this->type_fund_spec, 'type_business_licence'=>$this->type_business_licence, 'type_funder_spec'=>$this->type_funder_spec, 'type_funder_decision'=>$this->type_funder_decision, 'type_credit_report'=>$this->type_credit_report, 'type_personal_credit_report'=>$this->type_personal_credit_report, 'type_financial_report'=>$this->type_financial_report, 'type_support_files'=>$this->type_support_files )); ?>
+            
+    </div>
+    <div class="grid_9 rtside">
+        <?php echo $this->partial('company/partials/_company_card.phtml', array('user'=>$this->me->getUser(), 'company'=>$company, 'logoUrl'=>$this->logoUrl, 'funding_mini_unit_perc'=>$this->funding_mini_unit_perc, 'funding_mini_unit_rmb'=>$funding_mini_unit_rmb)); ?>
+
+        <?php if(strlen($company->additional_rights)>0) {
+            
+        ?>
+        <div class="sideblock">
+            
+                <div class="head">
+                        附加权益
+                </div>
+                <div class="body">
+                        <div class="imgs">
+                                <p><?php echo $company->additional_rights ?></p>
+                                <div class="clear"></div>
+                        </div>
+                </div>
+        </div>
+        <?php
+        }
+        ?>
+        
+        <?php echo $this->partial('company/partials/_company_block_investor_and_guarantor.phtml', array('company'=>$company, 'show_guarantors'=>false)); ?>
+
+    </div>
+</div>
+
+
+<?php
+    }
+?>
+
+<script type="text/javascript">
+    (function($){
+        
+        var blocks = $('.page');
+        
+        bindTabItem(blocks, 'tabitem');
+        
+        bindPhotoPage();
+        <?php if(!$lock) { ?>
+        $('#refusebtn').click(function(e){
+            $.validResultClear();
+            var object = $(e.target);
+            var alt = object.attr('alt');
+            var val = object.val();
+            
+            object.val(alt);
+            object.attr('alt',val);
+            
+            $('#refusereason').toggle();
+        });
+        $('#acceptbtn').click(function(e){
+            var data = {'company': '<?php echo $company->id ?>', 'candidate': '<?php echo $this->candidate->id ?>'};
+            $.post('<?php echo $this->url(array(), 'candidate-accept-invitation')?>', data, function(response){
+                if(response === 1) {
+                    alert('操作成功');
+                    location.reload();
+                } else {
+                    alert('操作失败，请重试');
+                }
+            });
+        });
+        $('#submitrefusebtn').click(function(){
+            var reason = $('#refusereasontxt').val();
+            if(reason.length > 0) {
+                $('#refusereasontxt').validResultHide();
+                var data = {'company': '<?php echo $company->id ?>', 'candidate': '<?php echo $this->candidate->id ?>', 'reason': reason};
+                $.post('<?php echo $this->url(array(), 'candidate-refuse-invitation')?>', data, function(response){
+                    if(response === 1) {
+                        alert('操作成功');
+                        location.reload();
+                    } else {
+                        alert('操作失败，请重试');
+                    }
+                });
+            } else {
+                $('#refusereasontxt').validResultShow('error', '请输入拒绝原因');
+            }
+        });
+        <?php } ?>
+    })(jQuery);
+</script>
+
+<?php
+    
+    
+}
+?>
+
+
+<script type="text/javascript">
+    (function($){
+        $('body').addClass('detail');
+            })(jQuery);
+</script>

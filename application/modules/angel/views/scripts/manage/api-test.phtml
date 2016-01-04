@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <script type="text/javascript">
+            
+            function favoAddTest() {
+                var url = '/api/favourite/add';
+                
+                var data = {'sid': '53fc0d5fb3580ee0313611a0'};
+
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    data: data,
+                    method: 'post',
+                    success: function(response) {
+                        alert(response.code);
+                    },
+                    error: function() {
+                        $.endWaiting();
+                    }
+                });
+            }
+            
+            function favoSaveTest() {
+                var url = '/api/favourite/add';
+                
+                var data = {'sid': '53f6ebacb3580e1d2f8b4568'};
+
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    data: data,
+                    method: 'post',
+                    success: function(response) {
+                        alert(response.code);
+                    },
+                    error: function() {
+                        $.endWaiting();
+                    }
+                });
+            }
+            
+            function favoRemoveTest() {
+                var url = '/api/favourite/remove';
+                
+                var data = {'sid': '53f6ebacb3580e1d2f8b4568'};
+
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    data: data,
+                    method: 'post',
+                    success: function(response) {
+                        alert(response.code);
+                    },
+                    error: function() {
+                        $.endWaiting();
+                    }
+                });
+            }
+            
+            function favoListTest() {
+                var url = '/api/favourite/list';
+                
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    method: 'get',
+                    success: function(response) {
+                        alert(response.code);
+                        alert(JSON.stringify(response.data));
+                    },
+                    error: function() {
+                        $.endWaiting();
+                    }
+                });
+            }
+            
+            function VoteUp() {
+                var url = '/api/keyword/vote';
+                
+                var data = {'pid': '53e1f661b3580e297d8b4572', 'time': 80};
+                
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    data: data,
+                    method: 'post',
+                    success: function(response) {
+                        alert(response.code);
+                        alert(JSON.stringify(response.data));
+                    },
+                    error: function() {
+                        $.endWaiting();
+                    }
+                });
+            }
+            
+            function VoteDown() {
+                var url = '/api/keyword/vote';
+                
+                var data = {'pid': '53e1f661b3580e297d8b4572', 'time': 19};
+                
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    data: data,
+                    method: 'post',
+                    success: function(response) {
+                        alert(response.code);
+                        alert(JSON.stringify(response.data));
+                    },
+                    error: function() {
+                        $.endWaiting();
+                    }
+                });
+            }
+            
+            function regUser() {
+                var url = 'http://localhost/register';
+                
+                var data = {'email': 'ud223456@qq.com', 'username': 'ud223456', 'password': '123123', 'age': '20', 'gender': '男', 'format': 'json'};
+                
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    data: data,
+                    method: 'post',
+                    success: function(response) {
+                        alert(response.code);
+                        alert(JSON.stringify(response.data));
+                    },
+                    error: function() {
+                        $.endWaiting();
+                    }
+                });
+           }
+           
+        function categoryList() {
+            var url = '/api/user/categorylist';
+
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                method: 'get',
+                success: function(response) {
+                    alert(response.code);
+                    alert(JSON.stringify(response.data));
+                },
+                error: function() {
+                    $.endWaiting();
+                }
+            });
+        }
+        
+        function specialProgramList() {
+            var url = '/api/special/program/list';
+
+            var data = {'sid': '53fc0d5fb3580ee0313611a0'};
+            
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                data: data,
+                method: 'get',
+                success: function(response) {
+                    alert(response.code);
+                    alert(JSON.stringify(response.data));
+                },
+                error: function() {
+                    $.endWaiting();
+                }
+            });
+        }
+        
+        function userCategroy() {
+            var url = '/api/user/category';    
+            
+            var data = {'category': '53e34c0bb3580ee10f8b45df;53e34c05b3580ee10f8b45de;53e34be7b3580ee10f8b45da;53e34be2b3580ee10f8b45d9;53e34bdab3580ee10f8b45d8;53e34bd4b3580ee10f8b45d7;53e34b67b3580ee10f8b45d2;53e34b5fb3580ee10f8b45d1;53e34b59b3580ee10f8b45d0;53e34b35b3580ee10f8b45cb;53e34b2db3580ee10f8b45ca;53e34b25b3580ee10f8b45c9' };
+            
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                data: data,
+                method: 'get',
+                success: function(response) {
+                    alert(response.code);
+                    alert(JSON.stringify(response.data));
+                },
+                error: function() {
+                    $.endWaiting();
+                }
+            });
+        }
+        
+        function sinaTest() {
+               shareTSina('夏季达沃斯聚焦创新 李克强将出席年会并致开幕辞',"http://china.haiwainet.cn/n/2014/0907/c345646-21054873.html", "http://china.haiwainet.cn", "http://www.cnr.cn/2012zt/58/22/201209/W020120912658056608064.jpg") ;
+         }
+         
+         function TenXunTest() {
+             shareToWb('夏季达沃斯聚焦创新 李克强将出席年会并致开幕辞',"http://china.haiwainet.cn/n/2014/0907/c345646-21054873.html", "http://china.haiwainet.cn", "http://www.cnr.cn/2012zt/58/22/201209/W020120912658056608064.jpg")
+         }
+        </script>
+    </head>
+    <body>
+        <button type="button" onclick="favoAddTest()">测试收藏</button>
+        <button type="button" onclick="favoSaveTest()">测试已有收藏保存</button>
+        <button type="button" onclick="favoRemoveTest()">测试移除收藏</button>
+        <button type="button" onclick="favoListTest()">测试收藏列表</button>
+        <br>
+        <button type="button" onclick="VoteUp()">测试节目加分</button>
+        <button type="button" onclick="VoteDown()">测试节目减分</button>
+        <br>
+        <button type="button" onclick="regUser()">测试注册用户</button>
+        <br>
+        <button type="button" onclick="sinaTest()">测试新浪分享</button>
+        <button type="button" onclick="TenXunTest()">测试腾讯微博分享</button>
+        <br>
+        <button type="button" onclick="categoryList()">测试分类列表</button>
+        
+        <button type="button" onclick="specialProgramList()">测试分类列表</button>
+        <button type="button" onclick="userCategroy()">测试保存分类</button>
+    </body>
+</html>

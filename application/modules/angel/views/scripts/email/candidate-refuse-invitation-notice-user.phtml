@@ -1,0 +1,16 @@
+<p><strong><?php echo $this->params['name'] ?></strong>，你好:</p>
+<p> “<?php echo $this->params['candidate']?>”拒绝成为“<?php echo $this->params['company']?>”的公司担保人。</p>
+<p>
+    原因如下：
+</p>
+<p>
+    <?php echo $this->params['reason']?>
+</p>
+
+<p style="margin-top:20px;">
+    请点击下方链接，重新邀请一位新的担保人：
+</p>
+<?php
+$resendurl = $this->params['url'];
+?>
+<a href="<?php echo $resendurl ?>"><?php echo $resendurl ?></a>
